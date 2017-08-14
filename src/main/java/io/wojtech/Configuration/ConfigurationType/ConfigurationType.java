@@ -1,4 +1,4 @@
-package io.wojtech.Configuration;
+package io.wojtech.Configuration.ConfigurationType;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

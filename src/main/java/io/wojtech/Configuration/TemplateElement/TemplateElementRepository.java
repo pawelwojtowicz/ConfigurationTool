@@ -1,7 +1,9 @@
 package io.wojtech.Configuration.TemplateElement;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  * Created by user on 2017-08-14.
  */
-public interface TemplateElementRepository {
+public interface TemplateElementRepository extends JpaRepository<TemplateElement, TemplateElement.TemplateElementId> {
 }
