@@ -1,6 +1,7 @@
 package io.wojtech.Configuration.Parameter;
 
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -8,7 +9,12 @@ import javax.persistence.Id;
 /**
  * Created by user on 2017-08-12.
  */
+@Entity
 public class Parameter {
+    public Parameter(long parameterId) {
+        ParameterId = parameterId;
+    }
+
     public Parameter(String name, String path, String type, int configurationTypeID, String value) {
         Name = name;
         Path = path;

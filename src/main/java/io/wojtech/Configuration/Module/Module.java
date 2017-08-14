@@ -15,6 +15,22 @@ public class Module {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long ModuleId;
     private String Name;
+    private String Description;
+    private long DeviceId;
+
+    public Module() {
+        ModuleId = 0;
+        Name = "";
+        Description = "";
+        DeviceId = 0;
+    }
+
+    public Module(long moduleId, String name, String description, long deviceId) {
+        ModuleId = moduleId;
+        Name = name;
+        Description = description;
+        DeviceId = deviceId;
+    }
 
     public long getModuleId() {
         return ModuleId;
@@ -48,6 +64,4 @@ public class Module {
         DeviceId = deviceId;
     }
 
-    private String Description;
-    private long DeviceId;
 }
