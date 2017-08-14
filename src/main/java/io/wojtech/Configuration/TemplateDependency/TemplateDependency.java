@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class TemplateDependency {
 
     @Embeddable
-    public class TemplateDependencyId implements Serializable
+    static public class TemplateDependencyId implements Serializable
     {
         public TemplateDependencyId(long templateId, long requiredTemplateId) {
             TemplateId = templateId;

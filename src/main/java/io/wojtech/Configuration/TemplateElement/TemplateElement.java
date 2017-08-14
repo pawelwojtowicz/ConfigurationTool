@@ -8,32 +8,41 @@ import java.io.Serializable;
  */
 @Entity
 public class TemplateElement {
+    public TemplateElement(long templateId, long parameterId, long templateParameterId) {
+        templateElementID = new TemplateElementId(templateId, parameterId );
+        TemplateParameterId = templateParameterId;
+    }
 
     @Embeddable
-    public class TemplateElementId implements Serializable
+    static public class TemplateElementId implements Serializable
     {
+        public TemplateElementId(long templateId, long parameterId) {
+            templateId = templateId;
+            ParameterId = parameterId;
+        }
+
         @Column(name = "TemplateId", nullable = false)
-        public long TemplateId;
+        public long templateId;
         @Column(name = "ParameterId", nullable = false)
         public long ParameterId;
     }
     @EmbeddedId
     private TemplateElementId templateElementID;
 
-    @Column(name = "TemplateParameterName")
-    private long TemplateParameterName;
+    @Column(name = "TemplateParameterId")
+    private long TemplateParameterId;
 
-    public long getTemplateParameterName() {
-        return TemplateParameterName;
+    public long getTemplateParameterId() {
+        return TemplateParameterId;
     }
-    public void setTemplateParameterName(long templateParameterName) {
-        TemplateParameterName = templateParameterName;
+    public void setTemplateParameterId(long templateParameterName) {
+        TemplateParameterId = templateParameterName;
     }
     public long getTemplateId() {
-        return templateElementID.TemplateId;
+        return templateElementID.templateId;
     }
     public void setTemplateId(long templateId) {
-        templateElementID.TemplateId = templateId;
+        templateElementID.templateId = templateId;
     }
     public long getParameterId() {
         return templateElementID.ParameterId;

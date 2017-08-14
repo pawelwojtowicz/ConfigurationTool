@@ -13,8 +13,8 @@ public class Configuration {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long ConfigurationId;
+    private long BaselineNumber;
     private String Name;
     private String Description;
     private long CustomerId;
-    private long BaselineId;
 }

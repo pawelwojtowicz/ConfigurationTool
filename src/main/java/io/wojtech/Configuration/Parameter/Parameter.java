@@ -1,10 +1,7 @@
 package io.wojtech.Configuration.Parameter;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by user on 2017-08-12.
@@ -19,7 +16,7 @@ public class Parameter {
         Name = name;
         Path = path;
         Type = type;
-        ConfigurationTypeID = configurationTypeID;
+        this.configurationTypeId = configurationTypeID;
         Value = value;
     }
 
@@ -32,7 +29,9 @@ public class Parameter {
     private String Unit;
     private String Value;
     private String Description;
-    private int ConfigurationTypeID;
+
+    @Column(name="ConfigurationTypeId")
+    private int configurationTypeId;
     private long ValidFromReleaseId;
     private long ValidToReleaseId;
 
@@ -101,11 +100,10 @@ public class Parameter {
     }
 
     public int getConfigurationTypeID() {
-        return ConfigurationTypeID;
+        return configurationTypeId;
     }
 
-    public void setConfigurationTypeID(int configurationTypeID) {
-        ConfigurationTypeID = configurationTypeID;
+    public void setConfigurationTypeID(int configurationTypeID) { this.configurationTypeId = configurationTypeID;
     }
 
     public String getValue() {
