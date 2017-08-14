@@ -9,8 +9,13 @@ import java.io.Serializable;
 @Entity
 public class TemplateRestriction {
     @Embeddable
-    public class TemplateRestrictionId implements Serializable
+    static public class TemplateRestrictionId implements Serializable
     {
+        public TemplateRestrictionId() {
+            TemplateId = 0;
+            RestrictedTemplateId = 0;
+        }
+
         public TemplateRestrictionId(long templateId, long restrictedTemplateId) {
             TemplateId = templateId;
             RestrictedTemplateId = restrictedTemplateId;
@@ -30,11 +35,9 @@ public class TemplateRestriction {
     public TemplateRestriction() {
         this.templateRestrictionId = new TemplateRestrictionId(0,0);
     }
-
     public TemplateRestriction(long templateId, long longRestrictedTemplateId) {
         this.templateRestrictionId = new TemplateRestrictionId(templateId, longRestrictedTemplateId);
     }
-
     public long getTemplateId() {
         return templateRestrictionId.TemplateId;
     }
