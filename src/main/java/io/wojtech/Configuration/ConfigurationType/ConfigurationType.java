@@ -15,4 +15,6 @@ public class ConfigurationType {
     private long ConfigurationTypeId;
     private String Name;
     private String Description;
+
+
 }

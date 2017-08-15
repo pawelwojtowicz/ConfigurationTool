@@ -1,10 +1,8 @@
 package io.wojtech.Configuration.CustomerContext.Baseline;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
+
 
 /**
  * Created by user on 2017-08-15.
@@ -12,27 +10,21 @@ import java.io.Serializable;
 @Entity
 public class Baseline {
 
-    @Embeddable
-    static public class BaselineId implements Serializable
-    {
-        public BaselineId(long customerId, long baselineNumber) {
-            CustomerId = customerId;
-            BaselineNumber = baselineNumber;
-        }
+    @Id
+    @GeneratedValue( strategy = GenerationType.SEQUENCE)
+    private long BaselineId;
+    private long CustomerId;
+    private long BaselineNumber;
+    private String Name;
+    private String Description;
+    private String Timestamp;
+    private String User;
 
-        @Column( name = "CustomerId", nullable = false)
-        public long CustomerId;
 
-        @Column( name = "BaselineNumber" , nullable = false)
-        public long BaselineNumber;
-
-    }
-
-    @EmbeddedId
-    private BaselineId baselineId;
-
-    public Baseline(long customerId, long baselineNumber, String name, String description, String timestamp, String user) {
-        baselineId = new BaselineId(customerId, baselineNumber);
+    public Baseline(long baselineId ,long customerId, long baselineNumber, String name, String description, String timestamp, String user) {
+        BaselineId = baselineId;
+        CustomerId = customerId;
+        BaselineId = baselineNumber;
         Name = name;
         Description = description;
         Timestamp = timestamp;
@@ -41,22 +33,22 @@ public class Baseline {
 
     public long getCustomerId()
     {
-        return baselineId.CustomerId;
+        return CustomerId;
     }
 
     public void setCustomerId(long customerId)
     {
-        baselineId.CustomerId = customerId;
+        CustomerId = customerId;
     }
 
     public long getBaselineNumber()
     {
-        return baselineId.BaselineNumber;
+        return BaselineNumber;
     }
 
     public void setBaselineNumber( long baselineNumber )
     {
-        baselineId.BaselineNumber = baselineNumber;
+        BaselineNumber = baselineNumber;
     }
 
     public String getName() {
@@ -91,8 +83,4 @@ public class Baseline {
         User = user;
     }
 
-    private String Name;
-    private String Description;
-    private String Timestamp;
-    private String User;
 }

@@ -12,8 +12,13 @@ import java.io.Serializable;
 public class ConfigurationElement {
 
     @Embeddable
-    public class ConfigurationElementId implements Serializable
+    static public class ConfigurationElementId implements Serializable
     {
+        public ConfigurationElementId(long configurationId, long templateId) {
+            ConfigurationId = configurationId;
+            TemplateId = templateId;
+        }
+
         @Column( name = "ConfigurationId", nullable = false)
         public long ConfigurationId;
 
@@ -21,22 +26,27 @@ public class ConfigurationElement {
         public long TemplateId;
     }
     @EmbeddedId
-    private ConfigurationElementId configurationElement;
+    private ConfigurationElementId configurationElementId;
+
+    ConfigurationElement(long configurationId, long templateId )
+    {
+        configurationElementId = new ConfigurationElementId(configurationId,templateId);
+    }
 
     public long getConfigurationId() {
-        return configurationElement.ConfigurationId;
+        return configurationElementId.ConfigurationId;
     }
 
     public void setConfigurationId(long configurationId) {
-        configurationElement.ConfigurationId = configurationId;
+        configurationElementId.ConfigurationId = configurationId;
     }
 
     public long getTemplateId() {
-        return configurationElement.TemplateId;
+        return configurationElementId.TemplateId;
     }
 
     public void setTemplateId(long templateId) {
-        configurationElement.TemplateId = templateId;
+        configurationElementId.TemplateId = templateId;
     }
 
 
