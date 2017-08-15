@@ -12,30 +12,30 @@ import java.util.List;
 @RestController
 public class TemplateController {
     @Autowired
-    TemplateRepository templateRepository;
+    TemplateService templateService;
 
     @RequestMapping( method = RequestMethod.POST , value = "/template")
     void addTemplate(@RequestBody Template template)
     {
-        templateRepository.save(template);
+        templateService.addTemplate(template);
     }
 
     @RequestMapping( method = RequestMethod.PUT, value = "/template")
     void updateTemplate(@RequestBody Template template)
     {
-        templateRepository.save(template);
+        templateService.updateTemplate(template);
     }
 
     @RequestMapping( method = RequestMethod.DELETE, value = "/template/{templateId}")
     void deleteTemplate(@PathVariable long templateId )
     {
-        templateRepository.delete(templateId);
+        templateService.deleteTemplate(templateId);
     }
 
     @RequestMapping( method = RequestMethod.GET, value = "/template")
     List<Template> getAllTemplates()
     {
-        return templateRepository.findAll();
+        return templateService.getAllTemplates();
     }
 
 }

@@ -14,41 +14,35 @@ import java.util.stream.Collectors;
 public class BaselineController {
 
     @Autowired
-    private BaselineRepository baselineRepository;
+    private BaselineService baselineService;
 
     @RequestMapping( method = RequestMethod.POST , value = "/baseline")
     void addBaseline(@RequestBody Baseline baseline )
     {
-        baselineRepository.save(baseline);
+        baselineService.addBaseline(baseline);
     }
 
     @RequestMapping( method = RequestMethod.PUT, value = "/baseline")
     void updateBaseline( @RequestBody Baseline baseline )
     {
-        baselineRepository.save(baseline);
+        baselineService.updateBaseline(baseline);
     }
 
     @RequestMapping( method = RequestMethod.DELETE, value = "/baseline/{baselineId}")
     void deleteBaseline( @PathVariable long baselineId)
     {
-        baselineRepository.delete(baselineId);
+        baselineService.deleteBaseline(baselineId);
     }
 
     @RequestMapping( method = RequestMethod.GET, value = "/baseline")
     public List<Baseline> getAllBaselines()
     {
-        return baselineRepository.findAll();
+        return baselineService.getAllBaselines();
     }
 
     @RequestMapping( method = RequestMethod.GET , value = "/baseline/{customerId}")
     public List<Baseline> getCustomerBaselines( @PathVariable long customerId)
     {
-        List<Baseline> customerBaselines = new ArrayList<Baseline>();
-
-        customerBaselines.addAll(baselineRepository.findAll().stream()
-                .filter(baseline-> baseline.getCustomerId() == customerId )
-                .collect(Collectors.toList()));
-
-        return customerBaselines;
+        return baselineService.getBaselinesForCustomer(customerId);
     }
 }

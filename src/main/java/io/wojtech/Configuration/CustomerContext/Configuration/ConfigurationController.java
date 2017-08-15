@@ -13,41 +13,35 @@ import java.util.stream.Collectors;
 @RestController
 public class ConfigurationController {
     @Autowired
-    private ConfigurationRepository configurationRepository;
+    private ConfigurationService configurationService;
 
     @RequestMapping( method = RequestMethod.POST , value = "/configuration")
     public void addConfiguration(@RequestBody Configuration configuration)
     {
-        configurationRepository.save(configuration);
+        configurationService.addConfiguration(configuration);
     }
 
     @RequestMapping( method = RequestMethod.PUT , value = "/configuration")
     public void updateConfiguration(@RequestBody Configuration configuration)
     {
-        configurationRepository.save(configuration);
+        configurationService.updateConfiguration(configuration);
     }
 
     @RequestMapping( method = RequestMethod.DELETE, value = "/configuration/{configurationId}")
     public void deleteConfiguration(@PathVariable long configurationId)
     {
-        configurationRepository.delete(configurationId);
+        configurationService.deleteConfiguration(configurationId);
     }
 
     @RequestMapping( method = RequestMethod.GET , value = "/configuration")
     public List<Configuration> getAllConfigurations()
     {
-        return configurationRepository.findAll();
+        return configurationService.getAllConfigurations();
     }
 
     @RequestMapping( method = RequestMethod.GET , value = "/configuration/{customerId}")
     public List<Configuration> getConfigurationsForCustomer( @PathVariable long customerId )
     {
-        List<Configuration> configurationsForCustomer = new ArrayList<Configuration>();
-
-        configurationsForCustomer.addAll(configurationRepository.findAll().stream()
-                .filter(configuration-> configuration.getCustomerId() == customerId )
-                .collect(Collectors.toList()));
-
-        return configurationsForCustomer;
+        return configurationService.getConfigurationsForCustomer(customerId);
     }
 }

@@ -12,29 +12,29 @@ import java.util.List;
 public class ParameterController {
 
     @Autowired
-    ParameterRepository parameterRepository;
+    ParameterService parameterService;
 
     @RequestMapping( method = RequestMethod.POST , value = "/parameter")
     public void addParameter( @RequestBody Parameter parameter)
     {
-        parameterRepository.save(parameter);
+        parameterService.addParameter(parameter);
     }
 
     @RequestMapping( method = RequestMethod.PUT , value = "/parameter")
     public void updateParameter( @RequestBody Parameter parameter)
     {
-        parameterRepository.save(parameter);
+        parameterService.updateParameter(parameter);
     }
 
     @RequestMapping( method = RequestMethod.DELETE, value = "/parameter/{parameterId}")
     public void deleteParameter( @PathVariable long parameterId)
     {
-        parameterRepository.delete(parameterId);
+        parameterService.deleteParameter(parameterId);
     }
 
     @RequestMapping( method = RequestMethod.GET, value = "/parameter/{configurationTypeId}")
     public List<Parameter> getParametersForConfigType(@PathVariable long configurationTypeId)
     {
-        return parameterRepository.findByConfigurationTypeId(configurationTypeId);
+        return parameterService.getParametersForConfigType(configurationTypeId);
     }
 }

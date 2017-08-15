@@ -10,30 +10,30 @@ import java.util.List;
  */
 @RestController
 public class ReleaseController {
-    @Autowired ReleaseRepository releaseRepository;
+    @Autowired ReleaseService releaseService;
 
     @RequestMapping( method = RequestMethod.POST, value = "/release")
     void addRelease(@RequestBody Release release)
     {
-        releaseRepository.save(release);
+        releaseService.addRelease(release);
     }
 
     @RequestMapping( method = RequestMethod.PUT, value = "/release")
     void updateRelease(@RequestBody Release release)
     {
-        releaseRepository.save(release);
+        releaseService.updateRelease(release);
     }
 
     @RequestMapping( method = RequestMethod.DELETE, value = "/release/{releaseId}")
-    void updateRelease(@PathVariable long releaseId)
+    void deleteRelease(@PathVariable long releaseId)
     {
-        releaseRepository.delete(releaseId);
+        releaseService.deleteRelease(releaseId);
     }
 
     @RequestMapping( method = RequestMethod.GET, value = "/release")
     List<Release> getAllReleases()
     {
-        return releaseRepository.findAll();
+        return releaseService.getAllReleases();
     }
 
 

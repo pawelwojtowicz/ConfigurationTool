@@ -12,35 +12,35 @@ import java.util.List;
 public class TemplateParameterController {
 
     @Autowired
-    TemplateParameterRepository templateParameterRepository;
+    TemplateParameterService templateParameterService;
 
     @RequestMapping( method = RequestMethod.POST , value = "/templateparameter")
     public void addTemplateParameter( @RequestBody TemplateParameter templateParameter)
     {
-        templateParameterRepository.save(templateParameter);
+        templateParameterService.addTemplateParameter(templateParameter);
     }
 
     @RequestMapping( method = RequestMethod.PUT , value = "/templateparameter")
     public void updateTemplateParameter( @RequestBody TemplateParameter templateParameter )
     {
-        templateParameterRepository.save(templateParameter);
+        templateParameterService.updateTemplateParameter(templateParameter);
     }
 
     @RequestMapping( method = RequestMethod.DELETE , value = "/templateparameter/{templateParameterId}")
     public void deleteTemplateParameter(@PathVariable long templateParameterId)
     {
-        templateParameterRepository.delete(templateParameterId);
+        templateParameterService.deleteTemplateParameter(templateParameterId);
     }
 
     @RequestMapping( method = RequestMethod.GET , value = "/templateparameter")
     public List<TemplateParameter> getAllTemplateParameters()
     {
-        return templateParameterRepository.findAll();
+        return templateParameterService.getAllTemplateParameters();
     }
 
     @RequestMapping (method = RequestMethod.GET, value = "/templateparameter/{templateId}")
     public List<TemplateParameter> getParametersForTemplate( @PathVariable long templateId)
     {
-        return templateParameterRepository.findByTemplateId(templateId);
+        return templateParameterService.getParametersForTemplate(templateId);
     }
 }

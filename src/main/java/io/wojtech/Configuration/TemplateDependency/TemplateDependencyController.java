@@ -13,37 +13,30 @@ import java.util.stream.Collectors;
 @RestController
 public class TemplateDependencyController {
     @Autowired
-    TemplateDependencyRepository templateDependencyRepository;
+    TemplateDependencyService templateDependencyService;
 
     @RequestMapping( method = RequestMethod.POST, value = "/templatedependency")
     public void addDependency( @RequestBody TemplateDependency templateDependency)
     {
-        templateDependencyRepository.save( templateDependency );
+        templateDependencyService.addDependency( templateDependency );
     }
 
     @RequestMapping( method = RequestMethod.DELETE, value = "/templatedependency/{templateId}/{requiredTemplateId}")
     public void deleteDependency(@PathVariable long templateId, @PathVariable long requiredTemplateId )
     {
-        TemplateDependency.TemplateDependencyId templateDependencyId = new TemplateDependency.TemplateDependencyId(templateId,requiredTemplateId);
-
-        templateDependencyRepository.delete(templateDependencyId);
+        templateDependencyService.deleteDependency(templateId, requiredTemplateId);
     }
 
     @RequestMapping( method = RequestMethod.GET, value = "/templatedependency")
     public List<TemplateDependency> getAllDependencies()
     {
-        return templateDependencyRepository.findAll();
+        return templateDependencyService.getAllDependencies();
     }
 
     @RequestMapping( method = RequestMethod.GET, value = "/templatedependency/{templateId}")
     public List<TemplateDependency> getDependenciesForTemplate(@PathVariable long templateId)
     {
-        List<TemplateDependency> listOfDependenciesForTemplate= new ArrayList<TemplateDependency>();
-        listOfDependenciesForTemplate.addAll(templateDependencyRepository.findAll().stream()
-                .filter(dependency-> dependency.getTemplateId() == templateId )
-                .collect(Collectors.toList()));
-
-        return listOfDependenciesForTemplate;
+        return templateDependencyService.getDependenciesForTemplate(templateId);
     }
 
 }

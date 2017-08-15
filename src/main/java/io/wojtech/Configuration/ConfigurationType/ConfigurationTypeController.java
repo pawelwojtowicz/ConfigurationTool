@@ -12,30 +12,30 @@ import java.util.List;
 @RestController
 public class ConfigurationTypeController {
     @Autowired
-    private ConfigurationTypeRepository configurationTypeRepository;
+    private ConfigurationTypeService configurationTypeService;
 
     @RequestMapping( method = RequestMethod.POST , value = "/configurationtype")
     void addConfigurationType(@RequestBody ConfigurationType configurationType)
     {
-        configurationTypeRepository.save(configurationType);
+        configurationTypeService.addConfigurationType(configurationType);
     }
 
     @RequestMapping( method = RequestMethod.PUT , value = "/configurationtype")
     void updateConfigurationType(@RequestBody ConfigurationType configurationType)
     {
-        configurationTypeRepository.save(configurationType);
+        configurationTypeService.updateConfigurationType(configurationType);
     }
 
 
     @RequestMapping( method = RequestMethod.DELETE , value = "/configurationtype/{configurationTypeId}")
     void deleteConfigurationType(@PathVariable long configurationTypeId)
     {
-        configurationTypeRepository.delete(configurationTypeId);
+        configurationTypeService.deleteConfigurationType(configurationTypeId);
     }
 
     @RequestMapping( method = RequestMethod.GET , value = "/configurationtype")
     public List<ConfigurationType> getAllConfigurationTypes()
     {
-        return configurationTypeRepository.findAll();
+        return configurationTypeService.getAllConfigurationTypes();
     }
 }

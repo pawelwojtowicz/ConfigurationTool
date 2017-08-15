@@ -12,29 +12,29 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerService customerService;
 
     @RequestMapping( method = RequestMethod.POST , value = "/customer" )
     public void addCustomer(@RequestBody Customer customer)
     {
-        customerRepository.save(customer);
+        customerService.addCustomer(customer);
     }
 
     @RequestMapping( method = RequestMethod.PUT , value = "/customer" )
     public void updateCustomer(@RequestBody Customer customer)
     {
-        customerRepository.save(customer);
+        customerService.updateCustomer(customer);
     }
 
     @RequestMapping( method = RequestMethod.DELETE , value = "/customer/{customerId}")
     public void deleteCustomer( @PathVariable long customerId)
     {
-        customerRepository.delete(customerId);
+        customerService.deleteCustomer(customerId);
     }
 
     @RequestMapping( method = RequestMethod.GET, value = "/customer")
     public List<Customer> getAllCustomers()
     {
-        return customerRepository.findAll();
+        return customerService.getAllCustomers();
     }
 }

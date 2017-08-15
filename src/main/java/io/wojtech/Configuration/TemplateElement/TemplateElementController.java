@@ -1,6 +1,5 @@
 package io.wojtech.Configuration.TemplateElement;
 
-import io.wojtech.Configuration.TemplateRestriction.TemplateRestriction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,41 +14,35 @@ import java.util.stream.Collectors;
 public class TemplateElementController {
 
     @Autowired
-    TemplateElementRepository templateElementRepository;
+    TemplateElementService templateElementService;
 
     @RequestMapping( method = RequestMethod.POST, value = "/templateelement")
     void addTemplateElement( @RequestBody TemplateElement templateElement)
     {
-        templateElementRepository.save(templateElement);
+        templateElementService.addTemplateElement(templateElement);
     }
 
     @RequestMapping( method = RequestMethod.PUT , value = "/templateelement")
     void updateTemplateElement( @RequestBody TemplateElement templateElement)
     {
-        templateElementRepository.save(templateElement);
+        templateElementService.updateTemplateElement(templateElement);
     }
 
     @RequestMapping( method = RequestMethod.DELETE, value = "templateelement/{templateElementId}")
     void deleteTemplateElement( @PathVariable long templateId, @PathVariable long parameterId )
     {
-        TemplateElement.TemplateElementId templateElementId = new TemplateElement.TemplateElementId(templateId,parameterId);
-        templateElementRepository.delete(templateElementId);
+        templateElementService.deleteTemplateElement(templateId,parameterId);
     }
 
     @RequestMapping( method = RequestMethod.GET, value = "/templatelement")
     List<TemplateElement> getAllTemplateElements()
     {
-        return templateElementRepository.findAll();
+        return templateElementService.getAllTemplateElements();
     }
 
     @RequestMapping(method = RequestMethod.GET , value = "/templateelement/{templateId}")
     List<TemplateElement> getElementsOfTemplate( @PathVariable long templateId)
     {
-        List<TemplateElement> listOfTemplateElements = new ArrayList<TemplateElement>();
-        listOfTemplateElements.addAll(templateElementRepository.findAll().stream()
-                .filter(templateElement -> templateElement.getTemplateId() == templateId )
-                .collect(Collectors.toList()));
-
-        return listOfTemplateElements;
+        return templateElementService.getElementsOfTemplate(templateId);
     }
 }

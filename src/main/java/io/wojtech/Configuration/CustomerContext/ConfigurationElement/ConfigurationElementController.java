@@ -14,43 +14,36 @@ import java.util.stream.Collectors;
 public class ConfigurationElementController {
 
     @Autowired
-    ConfigurationElementRepository configurationElementRepository;
+    ConfigurationElementService configurationElementService;
 
     @RequestMapping( method = RequestMethod.POST , value = "/configurationelement")
     void addConfigrationElement(@RequestBody ConfigurationElement configurationElement )
     {
-        configurationElementRepository.save(configurationElement);
+        configurationElementService.addConfigrationElement(configurationElement);
     }
 
     @RequestMapping( method = RequestMethod.PUT, value = "/configurationelement")
     void updateConfigurationElement( @RequestBody ConfigurationElement configurationElement)
     {
-        configurationElementRepository.save(configurationElement);
+        configurationElementService.updateConfigurationElement(configurationElement);
     }
 
     @RequestMapping( method = RequestMethod.DELETE, value = "/configurationelement/{configurationId}/{templateId}")
     void deleteConfigurationElement(@PathVariable long configurationId, @PathVariable long templateId)
     {
-        ConfigurationElement.ConfigurationElementId configurationElementId = new ConfigurationElement.ConfigurationElementId(configurationId,templateId);
-        configurationElementRepository.delete(configurationElementId);
+        configurationElementService.deleteConfigurationElement(configurationId, templateId);
     }
 
     @RequestMapping( method = RequestMethod.GET , value = "/configurationelement")
     List<ConfigurationElement> getAllConfigurationElements()
     {
-        return configurationElementRepository.findAll();
+        return configurationElementService.getAllConfigurationElements();
     }
 
     @RequestMapping( method = RequestMethod.GET , value = "/configurationelement/{configurationId}")
     List<ConfigurationElement> getElementsForConfiguration( @PathVariable long configurationId )
     {
-        List<ConfigurationElement> elementsForConfiguration = new ArrayList<ConfigurationElement>();
-
-        elementsForConfiguration.addAll(configurationElementRepository.findAll().stream()
-                .filter(configurationElement -> configurationElement.getConfigurationId() == configurationId)
-                .collect(Collectors.toList()));
-
-        return elementsForConfiguration;
+        return configurationElementService.getElementsForConfiguration(configurationId);
     }
 
 }

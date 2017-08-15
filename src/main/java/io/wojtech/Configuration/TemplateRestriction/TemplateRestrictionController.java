@@ -13,39 +13,30 @@ import java.util.stream.Collectors;
 @RestController
 public class TemplateRestrictionController {
     @Autowired
-    TemplateRestrictionRepository templateRestrictionRepository;
+    TemplateRestrictionService templateRestrictionRepository;
 
     @RequestMapping( method = RequestMethod.POST, value = "/templaterestriction")
     public void addRestriction( @RequestBody TemplateRestriction templateRestriction)
     {
-        templateRestrictionRepository.save( templateRestriction );
+        templateRestrictionRepository.addRestriction(templateRestriction );
     }
 
     @RequestMapping( method = RequestMethod.DELETE, value = "/templaterestriction/{templateId}/{restrictedTemplateId}")
     public void deleteRestriction( @PathVariable long templateId, @PathVariable long restrictedTemplateId )
     {
-        TemplateRestriction.TemplateRestrictionId templateRestrictionId = new TemplateRestriction.TemplateRestrictionId(templateId,restrictedTemplateId);
-
-        templateRestrictionRepository.delete(templateRestrictionId);
+        templateRestrictionRepository.deleteRestriction(templateId,restrictedTemplateId);
     }
 
     @RequestMapping( method = RequestMethod.GET, value = "/templaterestriction")
     public List<TemplateRestriction> getAllRestrictions()
     {
-        return templateRestrictionRepository.findAll();
+        return templateRestrictionRepository.getAllRestrictions();
     }
 
     @RequestMapping( method = RequestMethod.GET, value = "/templaterestriction/{templateId}")
     public List<TemplateRestriction> getRestrictionsForTemplate(@PathVariable long templateId)
     {
-        List<TemplateRestriction> listOfRestrictionsForTemplate = new ArrayList<TemplateRestriction>();
-        listOfRestrictionsForTemplate.addAll(templateRestrictionRepository.findAll().stream()
-                .filter(restriction -> restriction.getTemplateId() == templateId )
-                .collect(Collectors.toList()));
-
-        return listOfRestrictionsForTemplate;
-
-        //return templateRestrictionRepository.findByTemplateId(templateId);
+        return templateRestrictionRepository.getRestrictionsForTemplate(templateId);
     }
 
 }
