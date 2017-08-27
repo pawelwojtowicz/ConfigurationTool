@@ -1,4 +1,5 @@
-package io.wojtech.Configuration.ConfigurationType;
+package io.wojtech.Configuration.Device;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,27 +10,31 @@ import javax.persistence.Id;
  * Created by user on 2017-08-13.
  */
 @Entity
-public class ConfigurationType {
+public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long ConfigurationTypeId;
+    private long DeviceId;
     private String Name;
     private String Description;
-    private String ExportType;
 
-    public ConfigurationType(long configurationTypeId, String name, String description, String exportType) {
-        ConfigurationTypeId = configurationTypeId;
+    public Device() {
+        DeviceId= 0;
+        Name = "";
+        Description = "";
+    }
+
+    public Device(long moduleId, String name, String description) {
+        DeviceId = moduleId;
         Name = name;
         Description = description;
-        ExportType = exportType;
     }
 
-    public long getConfigurationTypeId() {
-        return ConfigurationTypeId;
+    public long getDeviceId() {
+        return DeviceId;
     }
 
-    public void setConfigurationTypeId(long configurationTypeId) {
-        ConfigurationTypeId = configurationTypeId;
+    public void setDeviceId(long moduleId) {
+        DeviceId= moduleId;
     }
 
     public String getName() {
@@ -46,13 +51,5 @@ public class ConfigurationType {
 
     public void setDescription(String description) {
         Description = description;
-    }
-
-    public String getExportType() {
-        return ExportType;
-    }
-
-    public void setExportType(String exportType) {
-        ExportType = exportType;
     }
 }
