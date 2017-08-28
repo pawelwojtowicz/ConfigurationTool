@@ -1,10 +1,10 @@
 package io.wojtech.Configuration.Module;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import io.wojtech.Configuration.Device.Device;
+
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by user on 2017-08-13.
@@ -16,20 +16,21 @@ public class Module {
     private long ModuleId;
     private String Name;
     private String Description;
-    private long DeviceId;
+
+    @ManyToMany( mappedBy = "DeviceModules")
+    private Set<Device> Devices;
 
     public Module() {
         ModuleId = 0;
         Name = "";
         Description = "";
-        DeviceId = 0;
     }
 
-    public Module(long moduleId, String name, String description, long deviceId) {
+    public Module(long moduleId, String name, String description, Set<Device> devices ) {
         ModuleId = moduleId;
         Name = name;
         Description = description;
-        DeviceId = deviceId;
+        Devices = devices;
     }
 
     public long getModuleId() {
@@ -56,12 +57,11 @@ public class Module {
         Description = description;
     }
 
-    public long getDeviceId() {
-        return DeviceId;
+    public Set<Device> getDevices() {
+        return Devices;
     }
 
-    public void setDeviceId(long deviceId) {
-        DeviceId = deviceId;
+    public void setDevices(Set<Device> devices) {
+        Devices = devices;
     }
-
 }
