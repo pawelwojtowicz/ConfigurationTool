@@ -30,6 +30,10 @@ public class ModuleService {
         return moduleRepository.findAll();
     }
 
+    public Module getModuleById( long moduleId ) {
+        return moduleRepository.findByModuleId(moduleId);
+    }
+
     public void deleteModule( long moduleId)
     {
         moduleRepository.delete(moduleId);

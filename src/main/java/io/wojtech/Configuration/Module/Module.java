@@ -4,6 +4,7 @@ package io.wojtech.Configuration.Module;
 import io.wojtech.Configuration.Device.Device;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Set;
 public class Module {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long ModuleId;
+    private long moduleId;
     private String Name;
     private String Description;
 
@@ -21,24 +22,25 @@ public class Module {
     private Set<Device> Devices;
 
     public Module() {
-        ModuleId = 0;
+        moduleId = 0;
         Name = "";
         Description = "";
+        Devices = new HashSet<Device>();
     }
 
     public Module(long moduleId, String name, String description, Set<Device> devices ) {
-        ModuleId = moduleId;
+        this.moduleId = moduleId;
         Name = name;
         Description = description;
         Devices = devices;
-    }
+        Devices = new HashSet<Device>();    }
 
     public long getModuleId() {
-        return ModuleId;
+        return moduleId;
     }
 
     public void setModuleId(long moduleId) {
-        ModuleId = moduleId;
+        this.moduleId = moduleId;
     }
 
     public String getName() {

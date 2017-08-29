@@ -32,6 +32,12 @@ public class ModuleController {
         return moduleService.getModules();
     }
 
+    @RequestMapping( method = RequestMethod.GET , value= "/modules/{moduleId}")
+    public Module getModuleById( @PathVariable long moduleId ) {
+        Module newOne = moduleService.getModuleById( moduleId );
+        return newOne;
+    }
+
     @RequestMapping( method = RequestMethod.DELETE, value = "/modules/{moduleId}")
     public void deleteModule( @PathVariable long moduleId)
     {
