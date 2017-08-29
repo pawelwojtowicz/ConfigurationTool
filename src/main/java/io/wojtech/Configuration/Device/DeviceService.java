@@ -29,6 +29,10 @@ public class DeviceService {
         return deviceRepository.findAll();
     }
 
+    public Device getDeviceById( long deviceId) {
+        return deviceRepository.findByDeviceId( deviceId);
+    }
+
     public void deleteDevice( long deviceId)
     {
         deviceRepository.delete(deviceId);

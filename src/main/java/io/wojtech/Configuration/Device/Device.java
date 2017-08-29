@@ -13,34 +13,34 @@ import java.util.Set;
 public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long DeviceId;
+    private long deviceId;
     private String Name;
     private String Description;
     @ManyToMany( cascade = CascadeType.ALL )
     @JoinTable( name = "DeviceModuleSetup",
-            joinColumns = @JoinColumn(name = "DeviceId", referencedColumnName = "DeviceId"),
+            joinColumns = @JoinColumn(name = "deviceId", referencedColumnName = "deviceId"),
             inverseJoinColumns = @JoinColumn( name ="ModuleId", referencedColumnName = "ModuleId"))
     private Set<Module> DeviceModules;
 
     public Device() {
-        DeviceId= 0;
+        deviceId = 0;
         Name = "";
         Description = "";
     }
 
     public Device(long moduleId, String name, String description , Set< Module> modules ) {
-        DeviceId = moduleId;
+        deviceId = moduleId;
         Name = name;
         Description = description;
         DeviceModules = modules;
     }
 
     public long getDeviceId() {
-        return DeviceId;
+        return deviceId;
     }
 
     public void setDeviceId(long moduleId) {
-        DeviceId= moduleId;
+        deviceId = moduleId;
     }
 
     public String getName() {

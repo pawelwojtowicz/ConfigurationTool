@@ -32,6 +32,13 @@ public class DeviceController {
         return deviceService.getDevices();
     }
 
+    @RequestMapping( method = RequestMethod.GET, value = "/devices/{deviceId}")
+    public Device getDeviceById( @PathVariable long deviceId )
+    {
+        Device newElement = deviceService.getDeviceById(deviceId);
+        return newElement;
+    }
+
     @RequestMapping( method = RequestMethod.DELETE, value = "/devices/{deviceId}")
     public void deleteDevice( @PathVariable long deviceId)
     {
