@@ -1,6 +1,7 @@
 package io.wojtech.Configuration.Module;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.wojtech.Configuration.Device.Device;
 
 import javax.persistence.*;
@@ -18,22 +19,23 @@ public class Module {
     private String Name;
     private String Description;
 
-    @ManyToMany( mappedBy = "DeviceModules")
-    private Set<Device> Devices;
+    @ManyToMany( mappedBy = "deviceModules", fetch = FetchType.LAZY )
+    @JsonIgnore
+    private Set<Device> devices;
 
     public Module() {
         moduleId = 0;
         Name = "";
         Description = "";
-        Devices = new HashSet<Device>();
+        devices = new HashSet<Device>();
     }
 
     public Module(long moduleId, String name, String description, Set<Device> devices ) {
         this.moduleId = moduleId;
         Name = name;
         Description = description;
-        Devices = devices;
-        Devices = new HashSet<Device>();    }
+        this.devices = devices;
+        this.devices = new HashSet<Device>();    }
 
     public long getModuleId() {
         return moduleId;
@@ -60,10 +62,10 @@ public class Module {
     }
 
     public Set<Device> getDevices() {
-        return Devices;
+        return devices;
     }
 
     public void setDevices(Set<Device> devices) {
-        Devices = devices;
+        this.devices = devices;
     }
 }

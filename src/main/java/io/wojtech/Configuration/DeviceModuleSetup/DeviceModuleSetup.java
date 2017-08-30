@@ -17,8 +17,22 @@ public class DeviceModuleSetup {
         public long moduleId;
     }
 
+    public DeviceModuleSetupId getSetupId() {
+        return setupId;
+    }
+
+    public void setSetupId(DeviceModuleSetupId setupId) {
+        this.setupId = setupId;
+    }
+
     @EmbeddedId
     private DeviceModuleSetupId setupId;
+
+    public DeviceModuleSetup() {
+        setupId = new DeviceModuleSetupId();
+        setupId.deviceId = 0;
+        setupId.moduleId = 0;
+    }
 
     public DeviceModuleSetup(long deviceId, long moduleId) {
         setupId = new DeviceModuleSetupId();

@@ -1,6 +1,8 @@
 package io.wojtech.Configuration.Device;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.wojtech.Configuration.Module.Module;
 
 import javax.persistence.*;
@@ -16,11 +18,12 @@ public class Device {
     private long deviceId;
     private String Name;
     private String Description;
-    @ManyToMany( cascade = CascadeType.ALL )
+    @ManyToMany( cascade = CascadeType.MERGE )
     @JoinTable( name = "DeviceModuleSetup",
             joinColumns = @JoinColumn(name = "deviceId", referencedColumnName = "deviceId"),
             inverseJoinColumns = @JoinColumn( name ="ModuleId", referencedColumnName = "ModuleId"))
-    private Set<Module> DeviceModules;
+    @JsonIgnoreProperties(value="devices")
+    private Set<Module> deviceModules;
 
     public Device() {
         deviceId = 0;
@@ -32,7 +35,7 @@ public class Device {
         deviceId = moduleId;
         Name = name;
         Description = description;
-        DeviceModules = modules;
+        deviceModules = modules;
     }
 
     public long getDeviceId() {
@@ -60,10 +63,10 @@ public class Device {
     }
 
     public Set<Module> getDeviceModules() {
-        return DeviceModules;
+        return deviceModules;
     }
 
     public void setDeviceModules(Set<Module> deviceModules) {
-        DeviceModules = deviceModules;
+        this.deviceModules = deviceModules;
     }
 }
