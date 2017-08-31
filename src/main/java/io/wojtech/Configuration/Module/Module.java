@@ -2,6 +2,8 @@ package io.wojtech.Configuration.Module;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.wojtech.Configuration.ConfigurationItem.ConfigurationItem;
+import io.wojtech.Configuration.CustomerContext.Configuration.Configuration;
 import io.wojtech.Configuration.Device.Device;
 
 import javax.persistence.*;
@@ -23,11 +25,18 @@ public class Module {
     @JsonIgnore
     private Set<Device> devices;
 
+    @ManyToMany( cascade = CascadeType.MERGE)
+    @JoinTable( name = "ModuleConfigItemSetup",
+            joinColumns = @JoinColumn(name = "moduleId", referencedColumnName = "moduleId"),
+            inverseJoinColumns = @JoinColumn( name ="configurationItemId", referencedColumnName = "configurationItemId"))
+    private Set<ConfigurationItem> configItems;
+
     public Module() {
         moduleId = 0;
         Name = "";
         Description = "";
         devices = new HashSet<Device>();
+        configItems = new HashSet<ConfigurationItem>();
     }
 
     public Module(long moduleId, String name, String description, Set<Device> devices ) {
@@ -35,7 +44,9 @@ public class Module {
         Name = name;
         Description = description;
         this.devices = devices;
-        this.devices = new HashSet<Device>();    }
+        this.devices = new HashSet<Device>();
+        configItems = new HashSet<ConfigurationItem>();
+    }
 
     public long getModuleId() {
         return moduleId;
@@ -67,5 +78,13 @@ public class Module {
 
     public void setDevices(Set<Device> devices) {
         this.devices = devices;
+    }
+
+    public Set<ConfigurationItem> getConfigItems() {
+        return configItems;
+    }
+
+    public void setConfigItems(Set<ConfigurationItem> configItems) {
+        this.configItems = configItems;
     }
 }
