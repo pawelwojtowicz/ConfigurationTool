@@ -10,5 +10,5 @@ import java.util.List;
  */
 @Repository
 public interface ParameterRepository extends JpaRepository<Parameter,Long> {
-    List<Parameter> findByConfigurationTypeId(long ConfigurationTypeId);
+    Parameter findByParameterId( long parameterId );
 }

@@ -23,13 +23,15 @@ public class ModuleConfigItemSetup {
     ModuleConfigItemSetupId moduleConfigSetupId;
 
     public ModuleConfigItemSetup() {
+        moduleConfigSetupId = new ModuleConfigItemSetupId();
         this.moduleConfigSetupId.moduleId = 0;
-        moduleConfigSetupId.ConfigurationItemId = 0;
+        this.moduleConfigSetupId.ConfigurationItemId = 0;
     }
 
     public ModuleConfigItemSetup(long moduleId, long configurationItemId) {
+        moduleConfigSetupId = new ModuleConfigItemSetupId();
         this.moduleConfigSetupId.moduleId = moduleId;
-        moduleConfigSetupId.ConfigurationItemId = configurationItemId;
+        this.moduleConfigSetupId.ConfigurationItemId = configurationItemId;
     }
 
     public long getModuleId() {

@@ -1,6 +1,9 @@
 package io.wojtech.Configuration.Parameter;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.wojtech.Configuration.ConfigurationItem.ConfigurationItem;
+
 import javax.persistence.*;
 
 /**
@@ -8,21 +11,9 @@ import javax.persistence.*;
  */
 @Entity
 public class Parameter {
-    public Parameter(long parameterId) {
-        ParameterId = parameterId;
-    }
-
-    public Parameter(String name, String path, String type, int configurationTypeID, String value) {
-        Name = name;
-        Path = path;
-        Type = type;
-        this.configurationTypeId = configurationTypeID;
-        Value = value;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long ParameterId;
+    private long parameterId;
     private String Name;
     private String Path;
     private String Type;
@@ -30,53 +21,52 @@ public class Parameter {
     private String Value;
     private String Description;
 
-    @Column(name="ConfigurationTypeId")
-    private int configurationTypeId;
+    @ManyToOne()
+    @JoinColumn(name = "configurationItemId")
+    @JsonIgnoreProperties(value="configItemParameters")
+    private ConfigurationItem configurationItem;
+
     private long ValidFromReleaseId;
     private long ValidToReleaseId;
 
-    public String getUnit() {
-        return Unit;
+
+
+    public Parameter() {
+        parameterId = 0;
+        Name = "";
+        Path = "";
+        Type = "";
+        Unit = "";
+        Value = "";
+        Description = "";
+        this.configurationItem = null;
+        ValidFromReleaseId = 0;
+        ValidToReleaseId = 0;
     }
 
-    public void setUnit(String unit) {
+    public Parameter(long parameterId, String name, String path, String type, String unit, String value, String description, ConfigurationItem configurationItem, long validFromReleaseId, long validToReleaseId) {
+        this.parameterId = parameterId;
+        Name = name;
+        Path = path;
+        Type = type;
         Unit = unit;
-    }
-
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
+        Value = value;
         Description = description;
-    }
-
-    public long getValidFromReleaseId() {
-        return ValidFromReleaseId;
-    }
-
-    public void setValidFromReleaseId(long validFromReleaseId) {
+        this.configurationItem = configurationItem;
         ValidFromReleaseId = validFromReleaseId;
-    }
-
-    public long getValidToReleaseId() {
-        return ValidToReleaseId;
-    }
-
-    public void setValidToReleaseId(long validToReleaseId) {
         ValidToReleaseId = validToReleaseId;
+    }
+
+    public long getParameterId() {
+        return parameterId;
+    }
+
+    public void setParameterId(long parameterId) {
+        this.parameterId = parameterId;
     }
 
     public String getName() {
         return Name;
-    }
-
-    public long getParameterId() {
-        return ParameterId;
-    }
-
-    public void setParameterId(long parameterId) {
-        ParameterId = parameterId;
     }
 
     public void setName(String name) {
@@ -99,11 +89,12 @@ public class Parameter {
         Type = type;
     }
 
-    public int getConfigurationTypeID() {
-        return configurationTypeId;
+    public String getUnit() {
+        return Unit;
     }
 
-    public void setConfigurationTypeID(int configurationTypeID) { this.configurationTypeId = configurationTypeID;
+    public void setUnit(String unit) {
+        Unit = unit;
     }
 
     public String getValue() {
@@ -112,5 +103,37 @@ public class Parameter {
 
     public void setValue(String value) {
         Value = value;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public ConfigurationItem getConfigurationItem() {
+        return configurationItem;
+    }
+
+    public void setConfigurationItem(ConfigurationItem configurationItem) {
+        this.configurationItem = configurationItem;
+    }
+
+    public long getValidFromReleaseId() {
+        return ValidFromReleaseId;
+    }
+
+    public void setValidFromReleaseId(long validFromReleaseId) {
+        ValidFromReleaseId = validFromReleaseId;
+    }
+
+    public long getValidToReleaseId() {
+        return ValidToReleaseId;
+    }
+
+    public void setValidToReleaseId(long validToReleaseId) {
+        ValidToReleaseId = validToReleaseId;
     }
 }

@@ -14,27 +14,33 @@ public class ParameterController {
     @Autowired
     ParameterService parameterService;
 
-    @RequestMapping( method = RequestMethod.POST , value = "/parameter")
+    @RequestMapping( method = RequestMethod.POST , value = "/parameters")
     public void addParameter( @RequestBody Parameter parameter)
     {
         parameterService.addParameter(parameter);
     }
 
-    @RequestMapping( method = RequestMethod.PUT , value = "/parameter")
+    @RequestMapping( method = RequestMethod.GET, value = "/parameters")
+    public List<Parameter> getAllParameters()
+    {
+        return parameterService.getAllParameters();
+    }
+
+    @RequestMapping( method = RequestMethod.GET, value = "/parameters/{parameterId}")
+    public Parameter getAllParameters(@PathVariable long parameterId)
+    {
+        return parameterService.getParameterById(parameterId);
+    }
+
+    @RequestMapping( method = RequestMethod.PUT , value = "/parameters")
     public void updateParameter( @RequestBody Parameter parameter)
     {
         parameterService.updateParameter(parameter);
     }
 
-    @RequestMapping( method = RequestMethod.DELETE, value = "/parameter/{parameterId}")
+    @RequestMapping( method = RequestMethod.DELETE, value = "/parameters/{parameterId}")
     public void deleteParameter( @PathVariable long parameterId)
     {
         parameterService.deleteParameter(parameterId);
-    }
-
-    @RequestMapping( method = RequestMethod.GET, value = "/parameter/{configurationTypeId}")
-    public List<Parameter> getParametersForConfigType(@PathVariable long configurationTypeId)
-    {
-        return parameterService.getParametersForConfigType(configurationTypeId);
     }
 }

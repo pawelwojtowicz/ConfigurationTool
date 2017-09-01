@@ -2,6 +2,7 @@ package io.wojtech.Configuration.ConfigurationItem;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.wojtech.Configuration.Module.Module;
+import io.wojtech.Configuration.Parameter.Parameter;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -19,33 +20,12 @@ public class ConfigurationItem {
     private String ExportType;
     private String FileName;
 
-    public long getConfigurationItemId() {
-        return configurationItemId;
-    }
-
-    public void setConfigurationItemId(long configurationItemId) {
-        this.configurationItemId = configurationItemId;
-    }
-
-    public String getFileName() {
-        return FileName;
-    }
-
-    public void setFileName(String fileName) {
-        FileName = fileName;
-    }
-
-    public Set<Module> getModules() {
-        return modules;
-    }
-
-    public void setModules(Set<Module> modules) {
-        this.modules = modules;
-    }
-
     @ManyToMany( mappedBy = "configItems", fetch = FetchType.LAZY )
     @JsonIgnore
     private Set<Module> modules;
+
+    @OneToMany(mappedBy = "configurationItem", cascade = CascadeType.MERGE , fetch = FetchType.LAZY)
+    private Set<Parameter> configItemParameters;
 
     public ConfigurationItem() {
         configurationItemId = 0;
@@ -54,20 +34,20 @@ public class ConfigurationItem {
         ExportType = "";
         FileName = "";
     }
-    public ConfigurationItem(long configurationTypeId, String name, String description, String exportType, String fileName) {
-        configurationItemId = configurationTypeId;
+    public ConfigurationItem(long configurationItemId, String name, String description, String exportType, String fileName) {
+        configurationItemId = configurationItemId;
         Name = name;
         Description = description;
         ExportType = exportType;
         FileName = fileName;
     }
 
-    public long getConfigurationTypeId() {
+    public long getConfigurationItemId() {
         return configurationItemId;
     }
 
-    public void setConfigurationTypeId(long configurationTypeId) {
-        configurationItemId = configurationTypeId;
+    public void setConfigurationItemId(long configurationItemId) {
+        this.configurationItemId = configurationItemId;
     }
 
     public String getName() {
@@ -92,5 +72,29 @@ public class ConfigurationItem {
 
     public void setExportType(String exportType) {
         ExportType = exportType;
+    }
+
+    public String getFileName() {
+        return FileName;
+    }
+
+    public void setFileName(String fileName) {
+        FileName = fileName;
+    }
+
+    public Set<Module> getModules() {
+        return modules;
+    }
+
+    public void setModules(Set<Module> modules) {
+        this.modules = modules;
+    }
+
+    public Set<Parameter> getConfigItemParameters() {
+        return configItemParameters;
+    }
+
+    public void setConfigItemParameters(Set<Parameter> configItemParameters) {
+        this.configItemParameters = configItemParameters;
     }
 }

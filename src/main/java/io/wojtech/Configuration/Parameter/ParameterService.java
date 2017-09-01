@@ -20,6 +20,14 @@ public class ParameterService {
         parameterRepository.save(parameter);
     }
 
+    public List<Parameter> getAllParameters() {
+        return parameterRepository.findAll();
+    }
+
+    public Parameter getParameterById( long parameterId ) {
+        return parameterRepository.findByParameterId(parameterId);
+    }
+
     public void updateParameter( Parameter parameter)
     {
         parameterRepository.save(parameter);
@@ -28,10 +36,5 @@ public class ParameterService {
     public void deleteParameter( long parameterId)
     {
         parameterRepository.delete(parameterId);
-    }
-
-    public List<Parameter> getParametersForConfigType(long configurationTypeId)
-    {
-        return parameterRepository.findByConfigurationTypeId(configurationTypeId);
     }
 }
