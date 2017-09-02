@@ -1,5 +1,7 @@
 package io.wojtech.Configuration.TemplateParameter;
 
+import io.wojtech.Configuration.Template.Template;
+
 import javax.persistence.*;
 
 /**
@@ -8,20 +10,12 @@ import javax.persistence.*;
 @Entity
 public class TemplateParameter {
     public TemplateParameter(long templateParameterId, long templateId, String name, String value, String description ,String ownerId) {
-        TemplateParameterId = templateParameterId;
+        this.templateParameterId = templateParameterId;
         this.templateId = templateId;
         Name = name;
         Value = value;
         Description = description;
         OwnerId = ownerId;
-    }
-
-    public long getTemplateId() {
-        return templateId;
-    }
-
-    public void setTemplateId(long templateId) {
-        templateId = templateId;
     }
 
     public String getName() {
@@ -37,11 +31,11 @@ public class TemplateParameter {
     }
 
     public long getTemplateParameterId() {
-        return TemplateParameterId;
+        return templateParameterId;
     }
 
     public void setTemplateParameterId(long templateParameterId) {
-        TemplateParameterId = templateParameterId;
+        this.templateParameterId = templateParameterId;
     }
 
     public void setValue(String value) {
@@ -72,14 +66,33 @@ public class TemplateParameter {
         Mandatory = mandatory;
     }
 
+    public long getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(long templateId) {
+        this.templateId = templateId;
+    }
+
+    public Template getParentTemplate() {
+        return parentTemplate;
+    }
+
+    public void setParentTemplate(Template parentTemplate) {
+        this.parentTemplate = parentTemplate;
+    }
+
     @Id
     @GeneratedValue( strategy = GenerationType.SEQUENCE )
-    private long TemplateParameterId;
-    @Column( name = "TemplateId" )
-    private long templateId;
+    private long templateParameterId;
+
     private String Name;
     private String Value;
     private String Description;
     private String OwnerId;
+    private long templateId;
     private int Mandatory;
+    @ManyToOne( )
+    @JoinColumn( name = "templateId",  insertable = false, updatable = false)
+    private Template parentTemplate;
 }

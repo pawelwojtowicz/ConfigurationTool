@@ -1,9 +1,10 @@
 package io.wojtech.Configuration.Template;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import io.wojtech.Configuration.TemplateElement.TemplateElement;
+import io.wojtech.Configuration.TemplateParameter.TemplateParameter;
+
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by user on 2017-08-13.
@@ -12,11 +13,17 @@ import javax.persistence.Id;
 public class Template {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long TemplateId;
+    private long templateId;
     private String Name;
     private String Description;
     private long OwnerId;
     private int TemplateStatus;
     private int Licensed;
+
+    @OneToMany(mappedBy = "parentTemplate", cascade = CascadeType.MERGE , fetch = FetchType.LAZY)
+    Set<TemplateParameter> templateParameters;
+
+    @OneToMany(mappedBy = "parentTemplate", cascade =  CascadeType.MERGE, fetch = FetchType.LAZY)
+    Set<TemplateElement> templateElements;
 
 }

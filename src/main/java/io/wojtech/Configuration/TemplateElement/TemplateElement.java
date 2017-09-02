@@ -1,5 +1,8 @@
 package io.wojtech.Configuration.TemplateElement;
 
+import io.wojtech.Configuration.Template.Template;
+import io.wojtech.Configuration.Parameter.Parameter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,7 +13,7 @@ import java.io.Serializable;
 public class TemplateElement {
     public TemplateElement(long templateId, long parameterId, long templateParameterId) {
         templateElementID = new TemplateElementId(templateId, parameterId );
-        TemplateParameterId = templateParameterId;
+        templateParameterId = templateParameterId;
     }
 
     @Embeddable
@@ -21,22 +24,31 @@ public class TemplateElement {
             ParameterId = parameterId;
         }
 
-        @Column(name = "TemplateId", nullable = false)
+        @Column(name = "templateId", nullable = false)
         public long templateId;
-        @Column(name = "ParameterId", nullable = false)
+        @Column(name = "parameterId", nullable = false)
         public long ParameterId;
     }
     @EmbeddedId
     private TemplateElementId templateElementID;
 
-    @Column(name = "TemplateParameterId")
-    private long TemplateParameterId;
+    @Column(name = "templateParameterId")
+    private long templateParameterId;
+
+    @ManyToOne()
+    @JoinColumn( name = "templateId",  insertable = false, updatable = false)
+    Template parentTemplate;
+
+    @OneToOne
+    @JoinColumn( name = "parameterId", insertable = false, updatable = false)
+    Parameter parameter;
+
 
     public long getTemplateParameterId() {
-        return TemplateParameterId;
+        return templateParameterId;
     }
     public void setTemplateParameterId(long templateParameterName) {
-        TemplateParameterId = templateParameterName;
+        templateParameterId = templateParameterName;
     }
     public long getTemplateId() {
         return templateElementID.templateId;
@@ -49,5 +61,21 @@ public class TemplateElement {
     }
     public void setParameterId(long parameterId) {
         templateElementID.ParameterId = parameterId;
+    }
+
+    public Template getParentTemplate() {
+        return parentTemplate;
+    }
+
+    public void setParentTemplate(Template parentTemplate) {
+        this.parentTemplate = parentTemplate;
+    }
+
+    public Parameter getParameter() {
+        return parameter;
+    }
+
+    public void setParameter(Parameter parameter) {
+        this.parameter = parameter;
     }
 }
