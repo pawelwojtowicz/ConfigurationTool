@@ -38,4 +38,10 @@ public class TemplateController {
         return templateService.getAllTemplates();
     }
 
+    @RequestMapping( method = RequestMethod.GET, value = "/template/{templateId}")
+    Template getTemplateByIt( @PathVariable long templateId) {
+        Template template = templateService.getTemplateById( templateId);
+        return template;
+    }
+
 }

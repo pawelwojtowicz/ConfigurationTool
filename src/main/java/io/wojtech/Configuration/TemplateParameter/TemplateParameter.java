@@ -9,6 +9,15 @@ import javax.persistence.*;
  */
 @Entity
 public class TemplateParameter {
+    public TemplateParameter() {
+        this.templateParameterId = 0;
+        this.templateId = 0;
+        Name = "";
+        Value = "";
+        Description = "";
+        OwnerId = "";
+    }
+
     public TemplateParameter(long templateParameterId, long templateId, String name, String value, String description ,String ownerId) {
         this.templateParameterId = templateParameterId;
         this.templateId = templateId;
@@ -58,14 +67,6 @@ public class TemplateParameter {
         OwnerId = ownerId;
     }
 
-    public int getMandatory() {
-        return Mandatory;
-    }
-
-    public void setMandatory(int mandatory) {
-        Mandatory = mandatory;
-    }
-
     public long getTemplateId() {
         return templateId;
     }
@@ -91,7 +92,6 @@ public class TemplateParameter {
     private String Description;
     private String OwnerId;
     private long templateId;
-    private int Mandatory;
     @ManyToOne( )
     @JoinColumn( name = "templateId",  insertable = false, updatable = false)
     private Template parentTemplate;
