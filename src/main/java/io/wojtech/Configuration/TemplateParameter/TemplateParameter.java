@@ -1,8 +1,11 @@
 package io.wojtech.Configuration.TemplateParameter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.wojtech.Configuration.Template.Template;
+import io.wojtech.Configuration.TemplateElement.TemplateElement;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by user on 2017-08-13.
@@ -92,7 +95,13 @@ public class TemplateParameter {
     private String Description;
     private String OwnerId;
     private long templateId;
+
     @ManyToOne( )
     @JoinColumn( name = "templateId",  insertable = false, updatable = false)
     private Template parentTemplate;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "templateParameter", cascade =  CascadeType.MERGE, fetch = FetchType.LAZY)
+    Set<TemplateElement> templateElements;
+
 }

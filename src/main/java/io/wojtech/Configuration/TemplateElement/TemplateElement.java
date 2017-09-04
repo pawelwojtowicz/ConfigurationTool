@@ -2,6 +2,7 @@ package io.wojtech.Configuration.TemplateElement;
 
 import io.wojtech.Configuration.Template.Template;
 import io.wojtech.Configuration.Parameter.Parameter;
+import io.wojtech.Configuration.TemplateParameter.TemplateParameter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +12,10 @@ import java.io.Serializable;
  */
 @Entity
 public class TemplateElement {
+    public TemplateElement() {
+        templateElementID = new TemplateElementId(0, 0 );
+        templateParameterId = 0;
+    }
     public TemplateElement(long templateId, long parameterId, long templateParameterId) {
         templateElementID = new TemplateElementId(templateId, parameterId );
         templateParameterId = templateParameterId;
@@ -19,21 +24,46 @@ public class TemplateElement {
     @Embeddable
     static public class TemplateElementId implements Serializable
     {
+        public TemplateElementId() {
+            templateId = 0;
+            this.parameterId = 0;
+        }
+
         public TemplateElementId(long templateId, long parameterId) {
             templateId = templateId;
-            ParameterId = parameterId;
+            this.parameterId = parameterId;
+        }
+
+        public long getTemplateId() {
+            return templateId;
+        }
+
+        public void setTemplateId(long templateId) {
+            this.templateId = templateId;
+        }
+
+        public long getParameterId() {
+            return parameterId;
+        }
+
+        public void setParameterId(long parameterId) {
+            this.parameterId = parameterId;
         }
 
         @Column(name = "templateId", nullable = false)
         public long templateId;
         @Column(name = "parameterId", nullable = false)
-        public long ParameterId;
+        public long parameterId;
     }
     @EmbeddedId
     private TemplateElementId templateElementID;
 
     @Column(name = "templateParameterId")
     private long templateParameterId;
+
+    @ManyToOne
+    @JoinColumn( name = "templateParameterId", insertable = false, updatable = false)
+    TemplateParameter templateParameter;
 
     @ManyToOne()
     @JoinColumn( name = "templateId",  insertable = false, updatable = false)
@@ -57,10 +87,10 @@ public class TemplateElement {
         templateElementID.templateId = templateId;
     }
     public long getParameterId() {
-        return templateElementID.ParameterId;
+        return templateElementID.parameterId;
     }
     public void setParameterId(long parameterId) {
-        templateElementID.ParameterId = parameterId;
+        templateElementID.parameterId = parameterId;
     }
 
     public Template getParentTemplate() {

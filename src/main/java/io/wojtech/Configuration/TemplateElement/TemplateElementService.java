@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +30,8 @@ public class TemplateElementService {
 
     void deleteTemplateElement( long templateId, long parameterId )
     {
+        List<TemplateElement> elements = templateElementRepository.findAll();
+
         TemplateElement.TemplateElementId templateElementId = new TemplateElement.TemplateElementId(templateId,parameterId);
         templateElementRepository.delete(templateElementId);
     }

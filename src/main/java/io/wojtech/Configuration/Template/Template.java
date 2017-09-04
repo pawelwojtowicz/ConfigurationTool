@@ -26,6 +26,7 @@ public class Template {
     Set<TemplateParameter> templateParameters;
 
     @OneToMany(mappedBy = "parentTemplate", cascade =  CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value="parentTemplate")
     Set<TemplateElement> templateElements;
 
     public Template() {

@@ -28,7 +28,7 @@ public class TemplateElementController {
         templateElementService.updateTemplateElement(templateElement);
     }
 
-    @RequestMapping( method = RequestMethod.DELETE, value = "templateelement/{templateElementId}")
+    @RequestMapping( method = RequestMethod.DELETE, value = "/templateelement/{templateId}/{parameterId}")
     void deleteTemplateElement( @PathVariable long templateId, @PathVariable long parameterId )
     {
         templateElementService.deleteTemplateElement(templateId,parameterId);
