@@ -25,12 +25,12 @@ public class TemplateElement {
     static public class TemplateElementId implements Serializable
     {
         public TemplateElementId() {
-            templateId = 0;
+            this.templateId = 0;
             this.parameterId = 0;
         }
 
         public TemplateElementId(long templateId, long parameterId) {
-            templateId = templateId;
+            this.templateId = templateId;
             this.parameterId = parameterId;
         }
 
