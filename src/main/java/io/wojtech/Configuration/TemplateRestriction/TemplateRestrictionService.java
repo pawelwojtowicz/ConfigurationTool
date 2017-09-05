@@ -18,6 +18,7 @@ public class TemplateRestrictionService {
 
     public void addRestriction( TemplateRestriction templateRestriction)
     {
+
         templateRestrictionRepository.save( templateRestriction );
     }
 
@@ -31,6 +32,7 @@ public class TemplateRestrictionService {
     public List<TemplateRestriction> getAllRestrictions()
     {
         return templateRestrictionRepository.findAll();
+
     }
 
     public List<TemplateRestriction> getRestrictionsForTemplate( long templateId)

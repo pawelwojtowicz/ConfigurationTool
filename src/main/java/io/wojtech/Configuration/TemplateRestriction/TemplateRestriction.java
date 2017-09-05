@@ -21,10 +21,10 @@ public class TemplateRestriction {
             RestrictedTemplateId = restrictedTemplateId;
         }
 
-        @Column(name = "TemplateId", nullable = false)
+        @Column(name = "templateId", nullable = false)
         public long TemplateId;
 
-        @Column(name = "RestrictedTemplateId", nullable = false)
+        @Column(name = "restrictedTemplateId", nullable = false)
         public long RestrictedTemplateId;
 
     }

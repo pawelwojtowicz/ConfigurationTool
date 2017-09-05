@@ -23,7 +23,7 @@ public class Template {
     private int licensed;
 
     @OneToMany(mappedBy = "parentTemplate", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value="parentTemplate")
+    @JsonIgnoreProperties(value={"parentTemplate","templateElements"})
     Set<TemplateParameter> templateParameters;
 
     @OneToMany(mappedBy = "parentTemplate", cascade =  CascadeType.MERGE, fetch = FetchType.LAZY)
@@ -31,7 +31,7 @@ public class Template {
     Set<TemplateElement> templateElements;
 
     @ManyToMany( cascade = CascadeType.MERGE)
-    @JoinTable( name = "templateDependencies",
+    @JoinTable( name = "templateDependency",
             joinColumns = @JoinColumn(name = "templateId", referencedColumnName = "templateId"),
             inverseJoinColumns = @JoinColumn( name ="requiredTemplateId", referencedColumnName = "templateId"))
     @JsonIgnoreProperties(value="dependentTemplates")
@@ -42,7 +42,7 @@ public class Template {
     private Set<Template> dependentTemplates;
 
     @ManyToMany( cascade = CascadeType.MERGE)
-    @JoinTable( name = "templateRestrictions",
+    @JoinTable( name = "templateRestriction",
             joinColumns = @JoinColumn(name = "templateId", referencedColumnName = "templateId"),
             inverseJoinColumns = @JoinColumn( name ="restrictedTemplateId", referencedColumnName = "templateId"))
     @JsonIgnoreProperties(value="restrictedTemplates")
@@ -152,5 +152,21 @@ public class Template {
 
     public void setDependentTemplates(Set<Template> dependentTemplates) {
         this.dependentTemplates = dependentTemplates;
+    }
+
+    public Set<Template> getTemplateRestrictions() {
+        return templateRestrictions;
+    }
+
+    public void setTemplateRestrictions(Set<Template> templateRestrictions) {
+        this.templateRestrictions = templateRestrictions;
+    }
+
+    public Set<Template> getRestrictedTemplates() {
+        return restrictedTemplates;
+    }
+
+    public void setRestrictedTemplates(Set<Template> restrictedTemplates) {
+        this.restrictedTemplates = restrictedTemplates;
     }
 }

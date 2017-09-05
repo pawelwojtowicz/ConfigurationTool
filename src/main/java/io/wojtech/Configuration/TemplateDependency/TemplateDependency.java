@@ -33,10 +33,10 @@ public class TemplateDependency {
             RequiredTemplateId = requiredTemplateId;
         }
 
-        @Column(name = "TemplateId", nullable = false)
+        @Column(name = "templateId", nullable = false)
         public long TemplateId;
 
-        @Column(name = "RequiredTemplateId", nullable = false)
+        @Column(name = "requiredTemplateId", nullable = false)
         public long RequiredTemplateId;
 
     }

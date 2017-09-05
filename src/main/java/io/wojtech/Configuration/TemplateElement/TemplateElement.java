@@ -1,5 +1,7 @@
 package io.wojtech.Configuration.TemplateElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.wojtech.Configuration.Template.Template;
 import io.wojtech.Configuration.Parameter.Parameter;
 import io.wojtech.Configuration.TemplateParameter.TemplateParameter;
@@ -63,6 +65,7 @@ public class TemplateElement {
 
     @ManyToOne
     @JoinColumn( name = "templateParameterId", insertable = false, updatable = false)
+    @JsonIgnoreProperties(value="parentTemplate")
     TemplateParameter templateParameter;
 
     @ManyToOne()
@@ -107,5 +110,21 @@ public class TemplateElement {
 
     public void setParameter(Parameter parameter) {
         this.parameter = parameter;
+    }
+
+    public TemplateElementId getTemplateElementID() {
+        return templateElementID;
+    }
+
+    public void setTemplateElementID(TemplateElementId templateElementID) {
+        this.templateElementID = templateElementID;
+    }
+
+    public TemplateParameter getTemplateParameter() {
+        return templateParameter;
+    }
+
+    public void setTemplateParameter(TemplateParameter templateParameter) {
+        this.templateParameter = templateParameter;
     }
 }
