@@ -1,5 +1,6 @@
 package io.wojtech.Configuration.Template;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.wojtech.Configuration.TemplateElement.TemplateElement;
 import io.wojtech.Configuration.TemplateParameter.TemplateParameter;
@@ -28,6 +29,28 @@ public class Template {
     @OneToMany(mappedBy = "parentTemplate", cascade =  CascadeType.MERGE, fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value="parentTemplate")
     Set<TemplateElement> templateElements;
+
+    @ManyToMany( cascade = CascadeType.MERGE)
+    @JoinTable( name = "templateDependencies",
+            joinColumns = @JoinColumn(name = "templateId", referencedColumnName = "templateId"),
+            inverseJoinColumns = @JoinColumn( name ="requiredTemplateId", referencedColumnName = "templateId"))
+    @JsonIgnoreProperties(value="dependentTemplates")
+    Set<Template> templateDependencies;
+
+    @ManyToMany( mappedBy = "templateDependencies", fetch = FetchType.LAZY )
+    @JsonIgnore
+    private Set<Template> dependentTemplates;
+
+    @ManyToMany( cascade = CascadeType.MERGE)
+    @JoinTable( name = "templateRestrictions",
+            joinColumns = @JoinColumn(name = "templateId", referencedColumnName = "templateId"),
+            inverseJoinColumns = @JoinColumn( name ="restrictedTemplateId", referencedColumnName = "templateId"))
+    @JsonIgnoreProperties(value="restrictedTemplates")
+    Set<Template> templateRestrictions;
+
+    @ManyToMany( mappedBy = "templateDependencies", fetch = FetchType.LAZY )
+    @JsonIgnore
+    private Set<Template> restrictedTemplates;
 
     public Template() {
         this.templateId = 0;
@@ -113,5 +136,21 @@ public class Template {
 
     public void setTemplateElements(Set<TemplateElement> templateElements) {
         this.templateElements = templateElements;
+    }
+
+    public Set<Template> getTemplateDependencies() {
+        return templateDependencies;
+    }
+
+    public void setTemplateDependencies(Set<Template> templateDependencies) {
+        this.templateDependencies = templateDependencies;
+    }
+
+    public Set<Template> getDependentTemplates() {
+        return dependentTemplates;
+    }
+
+    public void setDependentTemplates(Set<Template> dependentTemplates) {
+        this.dependentTemplates = dependentTemplates;
     }
 }
