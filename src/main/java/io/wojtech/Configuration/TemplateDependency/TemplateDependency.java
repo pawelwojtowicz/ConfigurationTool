@@ -12,32 +12,37 @@ public class TemplateDependency {
     @Embeddable
     static public class TemplateDependencyId implements Serializable
     {
+        public TemplateDependencyId() {
+            this.templateId = 0;
+            this.requiredTemplateId = 0;
+        }
+
         public TemplateDependencyId(long templateId, long requiredTemplateId) {
-            TemplateId = templateId;
-            RequiredTemplateId = requiredTemplateId;
+            this.templateId = templateId;
+            this.requiredTemplateId = requiredTemplateId;
         }
 
         public long getTemplateId() {
-            return TemplateId;
+            return templateId;
         }
 
         public void setTemplateId(long templateId) {
-            TemplateId = templateId;
+            templateId = templateId;
         }
 
         public long getRequiredTemplateId() {
-            return RequiredTemplateId;
+            return requiredTemplateId;
         }
 
         public void setRequiredTemplateId(long requiredTemplateId) {
-            RequiredTemplateId = requiredTemplateId;
+            requiredTemplateId = requiredTemplateId;
         }
 
         @Column(name = "templateId", nullable = false)
-        public long TemplateId;
+        public long templateId;
 
         @Column(name = "requiredTemplateId", nullable = false)
-        public long RequiredTemplateId;
+        public long requiredTemplateId;
 
     }
 
@@ -55,19 +60,19 @@ public class TemplateDependency {
     }
 
     public long getTemplateId() {
-        return templateDependencyId.TemplateId;
+        return templateDependencyId.templateId;
     }
 
     public void setTemplateId(long templateId) {
-        templateDependencyId.TemplateId = templateId;
+        templateDependencyId.templateId = templateId;
     }
 
     public long getRequiredTemplateId() {
-        return templateDependencyId.RequiredTemplateId;
+        return templateDependencyId.requiredTemplateId;
     }
 
     public void setRequiredTemplateId(long requiredTemplateId) {
-        templateDependencyId.RequiredTemplateId = requiredTemplateId;
+        templateDependencyId.requiredTemplateId = requiredTemplateId;
     }
 
 }

@@ -48,7 +48,7 @@ public class Template {
     @JsonIgnoreProperties(value="restrictedTemplates")
     Set<Template> templateRestrictions;
 
-    @ManyToMany( mappedBy = "templateDependencies", fetch = FetchType.LAZY )
+    @ManyToMany( mappedBy = "templateRestrictions", fetch = FetchType.LAZY )
     @JsonIgnore
     private Set<Template> restrictedTemplates;
 
