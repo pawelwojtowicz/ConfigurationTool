@@ -1,61 +1,100 @@
 package io.wojtech.Configuration.CustomerContext.Configuration;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by user on 2017-08-13.
  */
 @Entity
 public class Configuration {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long ConfigurationId;
-    private long BaselineNumber;
-    private String Name;
-    private String Description;
+
+    @Embeddable
+    public static class ConfigId implements Serializable
+    {
+        @Column(name = "configurationId", nullable = false)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE)
+        private long configurationId;
+
+        @Column(name = "baselineId", nullable = false)
+        private long baselineId;
+
+        public ConfigId() {
+            this.configurationId = 0;
+            this.baselineId = 0;
+        }
+
+        public long getConfigurationId() {
+            return configurationId;
+        }
+
+        public void setConfigurationId(long configurationId) {
+            this.configurationId = configurationId;
+        }
+
+        public long getBaselineId() {
+            return baselineId;
+        }
+
+        public void setBaselineId(long baselineId) {
+            this.baselineId = baselineId;
+        }
+    }
+
+    @EmbeddedId
+    ConfigId configId;
+    private String name;
+    private String description;
     private long CustomerId;
 
+    public Configuration() {
+        configId = new ConfigId();
+        configId.configurationId = 0;
+        configId.baselineId= 0;
+        this.name = name;
+        this.description = description;
+        CustomerId = 0;
+    }
+
     public Configuration(long configurationId, long baselineNumber, String name, String description, long customerId) {
-        ConfigurationId = configurationId;
-        BaselineNumber = baselineNumber;
-        Name = name;
-        Description = description;
+        configId = new ConfigId();
+        configId.configurationId = configurationId;
+        configId.baselineId= baselineNumber;
+        this.name = name;
+        this.description = description;
         CustomerId = customerId;
     }
 
     public long getConfigurationId() {
-        return ConfigurationId;
+        return configId.configurationId;
     }
 
     public void setConfigurationId(long configurationId) {
-        ConfigurationId = configurationId;
+        configId.configurationId = configurationId;
     }
 
     public long getBaselineNumber() {
-        return BaselineNumber;
+        return configId.baselineId;
     }
 
     public void setBaselineNumber(long baselineNumber) {
-        BaselineNumber = baselineNumber;
+        configId.baselineId = baselineNumber;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public long getCustomerId() {

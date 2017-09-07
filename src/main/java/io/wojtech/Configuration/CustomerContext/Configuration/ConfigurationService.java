@@ -28,7 +28,10 @@ public class ConfigurationService {
 
     void deleteConfiguration( long configurationId )
     {
-        configurationRepository.delete(configurationId);
+        Configuration.ConfigId toDeleteId = new Configuration.ConfigId();
+        toDeleteId.setConfigurationId(configurationId);
+        toDeleteId.setBaselineId(0);
+        configurationRepository.delete(toDeleteId);
     }
 
     List<Configuration> getAllConfigurations()
@@ -36,16 +39,11 @@ public class ConfigurationService {
         return configurationRepository.findAll();
     }
 
-    List<Configuration> getConfigurationsForCustomer( long customerId)
-    {
-        List<Configuration> configurationsForCustomer = new ArrayList<Configuration>();
-
-        configurationsForCustomer.addAll(configurationRepository.findAll().stream()
-                .filter(configuration-> configuration.getCustomerId() == customerId )
-                .collect(Collectors.toList()));
-
-        return configurationsForCustomer;
-
+    Configuration getConfigurationById(long configurationId) {
+        Configuration.ConfigId idx = new Configuration.ConfigId();
+        idx.setConfigurationId(configurationId);
+        return configurationRepository.findOne(idx);
     }
+
 
 }

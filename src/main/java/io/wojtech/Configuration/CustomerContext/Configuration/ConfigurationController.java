@@ -40,8 +40,8 @@ public class ConfigurationController {
     }
 
     @RequestMapping( method = RequestMethod.GET , value = "/configuration/{customerId}")
-    public List<Configuration> getConfigurationsForCustomer( @PathVariable long customerId )
+    public Configuration getConfigurationsByConfigId( @PathVariable long configurationId )
     {
-        return configurationService.getConfigurationsForCustomer(customerId);
+        return configurationService.getConfigurationById(configurationId );
     }
 }
