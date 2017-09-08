@@ -12,48 +12,33 @@ public class Configuration {
     @Embeddable
     public static class ConfigId implements Serializable
     {
-        @Column(name = "configurationId", nullable = false)
+        @Column(name = "configurationId")
         @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        private long configurationId;
+        public long configurationId;
 
         @Column(name = "baselineId", nullable = false)
-        private long baselineId;
+        public long baselineId;
 
         public ConfigId() {
             this.configurationId = 0;
             this.baselineId = 0;
         }
-
-        public long getConfigurationId() {
-            return configurationId;
-        }
-
-        public void setConfigurationId(long configurationId) {
-            this.configurationId = configurationId;
-        }
-
-        public long getBaselineId() {
-            return baselineId;
-        }
-
-        public void setBaselineId(long baselineId) {
-            this.baselineId = baselineId;
-        }
     }
 
     @EmbeddedId
     ConfigId configId;
+
     private String name;
     private String description;
-    private long CustomerId;
+    private long customerId;
 
     public Configuration() {
         configId = new ConfigId();
         configId.configurationId = 0;
         configId.baselineId= 0;
         this.name = name;
-        this.description = description;
-        CustomerId = 0;
+        this.description = "";
+        customerId = 0;
     }
 
     public Configuration(long configurationId, long baselineNumber, String name, String description, long customerId) {
@@ -62,7 +47,7 @@ public class Configuration {
         configId.baselineId= baselineNumber;
         this.name = name;
         this.description = description;
-        CustomerId = customerId;
+        this.customerId = customerId;
     }
 
     public long getConfigurationId() {
@@ -73,12 +58,12 @@ public class Configuration {
         configId.configurationId = configurationId;
     }
 
-    public long getBaselineNumber() {
+    public long getBaselineId() {
         return configId.baselineId;
     }
 
-    public void setBaselineNumber(long baselineNumber) {
-        configId.baselineId = baselineNumber;
+    public void setBaselineId(long baselineId) {
+        configId.baselineId = baselineId;
     }
 
     public String getName() {
@@ -98,10 +83,10 @@ public class Configuration {
     }
 
     public long getCustomerId() {
-        return CustomerId;
+        return customerId;
     }
 
     public void setCustomerId(long customerId) {
-        CustomerId = customerId;
+        this.customerId = customerId;
     }
 }

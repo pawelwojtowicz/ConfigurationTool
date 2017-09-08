@@ -28,10 +28,10 @@ public class ConfigurationElementController {
         configurationElementService.updateConfigurationElement(configurationElement);
     }
 
-    @RequestMapping( method = RequestMethod.DELETE, value = "/configurationelement/{configurationId}/{templateId}")
-    void deleteConfigurationElement(@PathVariable long configurationId, @PathVariable long templateId)
+    @RequestMapping( method = RequestMethod.DELETE, value = "/configurationelement/{configurationElementId}")
+    void deleteConfigurationElement(@PathVariable long configurationElementId)
     {
-        configurationElementService.deleteConfigurationElement(configurationId, templateId);
+        configurationElementService.deleteConfigurationElement(configurationElementId,0);
     }
 
     @RequestMapping( method = RequestMethod.GET , value = "/configurationelement")

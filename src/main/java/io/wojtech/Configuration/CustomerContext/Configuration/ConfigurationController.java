@@ -16,9 +16,9 @@ public class ConfigurationController {
     private ConfigurationService configurationService;
 
     @RequestMapping( method = RequestMethod.POST , value = "/configuration")
-    public void addConfiguration(@RequestBody Configuration configuration)
+    public Configuration addConfiguration(@RequestBody Configuration configuration)
     {
-        configurationService.addConfiguration(configuration);
+        return configurationService.addConfiguration(configuration);
     }
 
     @RequestMapping( method = RequestMethod.PUT , value = "/configuration")

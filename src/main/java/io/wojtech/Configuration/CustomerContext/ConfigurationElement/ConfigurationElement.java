@@ -12,42 +12,86 @@ import java.io.Serializable;
 public class ConfigurationElement {
 
     @Embeddable
-    static public class ConfigurationElementId implements Serializable
+    static public class ConfigElementId implements Serializable
     {
-        public ConfigurationElementId(long configurationId, long templateId) {
-            ConfigurationId = configurationId;
-            TemplateId = templateId;
+        public ConfigElementId() {
+            this.configurationElementId = 0;
+            this.baselineId= 0;
         }
 
-        @Column( name = "ConfigurationId", nullable = false)
-        public long ConfigurationId;
+        public ConfigElementId(long configurationElementId, long baselineId) {
+            this.configurationElementId = configurationElementId;
+            this.baselineId= baselineId;
+        }
 
-        @Column(name = "TemplateId",nullable = false)
-        public long TemplateId;
+        @Column( name = "configurationElementId", nullable = false)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE)
+        public long configurationElementId;
+
+        @Column(name = "baselineId",nullable = false)
+        public long baselineId;
     }
     @EmbeddedId
-    private ConfigurationElementId configurationElementId;
+    private ConfigElementId configElementId;
 
-    ConfigurationElement(long configurationId, long templateId )
-    {
-        configurationElementId = new ConfigurationElementId(configurationId,templateId);
+    long configurationId;
+
+    long templateId;
+
+    String genericTemplatePath;
+
+
+    public ConfigurationElement() {
+        this.configElementId = new ConfigElementId( 0,0);
+        this.configurationId = 0;
+        this.templateId = 0;
+        this.genericTemplatePath = "";
+    }
+
+    public ConfigurationElement(long configurationElementId, long baselineId, long configurationId, long templateId) {
+        this.configElementId = new ConfigElementId( configurationElementId, baselineId );
+        this.configurationId = configurationId;
+        this.templateId = templateId;
+        this.genericTemplatePath = "";
+    }
+
+    public long getConfigurationElementId() {
+        return configElementId.configurationElementId;
+    }
+
+    public void setConfigurationElementId(long configurationElementId) {
+        this.configElementId.configurationElementId = configurationElementId;
+    }
+
+    public long getBaselineId() {
+        return configElementId.baselineId;
+    }
+
+    public void setBaselineId(long baselineId) {
+        this.configElementId.baselineId = baselineId;
     }
 
     public long getConfigurationId() {
-        return configurationElementId.ConfigurationId;
+        return configurationId;
     }
 
     public void setConfigurationId(long configurationId) {
-        configurationElementId.ConfigurationId = configurationId;
+        this.configurationId = configurationId;
     }
 
     public long getTemplateId() {
-        return configurationElementId.TemplateId;
+        return templateId;
     }
 
     public void setTemplateId(long templateId) {
-        configurationElementId.TemplateId = templateId;
+        this.templateId = templateId;
     }
 
+    public String getGenericTemplatePath() {
+        return genericTemplatePath;
+    }
 
+    public void setGenericTemplatePath(String genericTemplatePath) {
+        this.genericTemplatePath = genericTemplatePath;
+    }
 }

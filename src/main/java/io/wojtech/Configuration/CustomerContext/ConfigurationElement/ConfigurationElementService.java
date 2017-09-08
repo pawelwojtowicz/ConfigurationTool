@@ -27,10 +27,10 @@ public class ConfigurationElementService {
         configurationElementRepository.save(configurationElement);
     }
 
-    void deleteConfigurationElement(long configurationId, long templateId)
+    void deleteConfigurationElement(long configurationElementId, long baselineId)
     {
-        ConfigurationElement.ConfigurationElementId configurationElementId = new ConfigurationElement.ConfigurationElementId(configurationId,templateId);
-        configurationElementRepository.delete(configurationElementId);
+        ConfigurationElement.ConfigElementId configElementId = new ConfigurationElement.ConfigElementId(configurationElementId,baselineId);
+        configurationElementRepository.delete(configElementId);
     }
 
     List<ConfigurationElement> getAllConfigurationElements()

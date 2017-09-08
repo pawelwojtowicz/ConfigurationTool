@@ -16,9 +16,9 @@ public class ConfigurationService {
     @Autowired
     ConfigurationRepository configurationRepository;
 
-    void addConfiguration(Configuration configuration)
+    Configuration addConfiguration(Configuration configuration)
     {
-        configurationRepository.save(configuration);
+        return configurationRepository.save(configuration);
     }
 
     void updateConfiguration(Configuration configuration)
@@ -29,8 +29,8 @@ public class ConfigurationService {
     void deleteConfiguration( long configurationId )
     {
         Configuration.ConfigId toDeleteId = new Configuration.ConfigId();
-        toDeleteId.setConfigurationId(configurationId);
-        toDeleteId.setBaselineId(0);
+        toDeleteId.configurationId= (configurationId);
+        toDeleteId.baselineId =(0);
         configurationRepository.delete(toDeleteId);
     }
 
@@ -41,7 +41,7 @@ public class ConfigurationService {
 
     Configuration getConfigurationById(long configurationId) {
         Configuration.ConfigId idx = new Configuration.ConfigId();
-        idx.setConfigurationId(configurationId);
+        idx.configurationId = configurationId;
         return configurationRepository.findOne(idx);
     }
 
