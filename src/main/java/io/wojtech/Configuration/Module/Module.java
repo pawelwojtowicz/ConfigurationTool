@@ -25,7 +25,7 @@ public class Module {
     @JsonIgnore
     private Set<Device> devices;
 
-    @ManyToMany( cascade = CascadeType.MERGE)
+    @ManyToMany( cascade = CascadeType.PERSIST)
     @JoinTable( name = "ModuleConfigItemSetup",
             joinColumns = @JoinColumn(name = "moduleId", referencedColumnName = "moduleId"),
             inverseJoinColumns = @JoinColumn( name ="configurationItemId", referencedColumnName = "configurationItemId"))

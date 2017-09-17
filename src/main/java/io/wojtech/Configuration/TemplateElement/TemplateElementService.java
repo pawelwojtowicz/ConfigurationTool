@@ -1,5 +1,9 @@
 package io.wojtech.Configuration.TemplateElement;
 
+import io.wojtech.Configuration.Parameter.Parameter;
+import io.wojtech.Configuration.Parameter.ParameterRepository;
+import io.wojtech.Configuration.TemplateParameter.TemplateParameter;
+import io.wojtech.Configuration.TemplateParameter.TemplateParameterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +22,20 @@ public class TemplateElementService {
     @Autowired
     TemplateElementRepository templateElementRepository;
 
+    @Autowired
+    TemplateParameterRepository templateParameterRepository;
+
+    @Autowired
+    ParameterRepository parameterRepository;
+
     void addTemplateElement( TemplateElement templateElement)
     {
+        TemplateParameter elementValue = templateParameterRepository.findOne(templateElement.getTemplateParameterId());
+        Parameter parameter = parameterRepository.findByParameterId(templateElement.getParameterId());
+
+        templateElement.setParameter(parameter);
+        templateElement.setTemplateParameter(elementValue);
+
         templateElementRepository.save(templateElement);
     }
 

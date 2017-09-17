@@ -28,10 +28,7 @@ public class ConfigurationService {
 
     void deleteConfiguration( long configurationId )
     {
-        Configuration.ConfigId toDeleteId = new Configuration.ConfigId();
-        toDeleteId.configurationId= (configurationId);
-        toDeleteId.baselineId =(0);
-        configurationRepository.delete(toDeleteId);
+        configurationRepository.delete(configurationId);
     }
 
     List<Configuration> getAllConfigurations()
@@ -40,9 +37,8 @@ public class ConfigurationService {
     }
 
     Configuration getConfigurationById(long configurationId) {
-        Configuration.ConfigId idx = new Configuration.ConfigId();
-        idx.configurationId = configurationId;
-        return configurationRepository.findOne(idx);
+
+        return configurationRepository.findOne(configurationId);
     }
 
 

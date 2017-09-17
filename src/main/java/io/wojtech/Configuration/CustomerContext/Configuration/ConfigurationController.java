@@ -39,7 +39,7 @@ public class ConfigurationController {
         return configurationService.getAllConfigurations();
     }
 
-    @RequestMapping( method = RequestMethod.GET , value = "/configuration/{customerId}")
+    @RequestMapping( method = RequestMethod.GET , value = "/configuration/{configurationId}")
     public Configuration getConfigurationsByConfigId( @PathVariable long configurationId )
     {
         return configurationService.getConfigurationById(configurationId );

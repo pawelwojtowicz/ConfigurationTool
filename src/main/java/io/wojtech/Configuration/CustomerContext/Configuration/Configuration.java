@@ -9,61 +9,48 @@ import java.io.Serializable;
 @Entity
 public class Configuration {
 
-    @Embeddable
-    public static class ConfigId implements Serializable
-    {
-        @Column(name = "configurationId")
-        @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        public long configurationId;
+    @Id
+    @Column(name = "configurationId")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    public long configurationId;
 
-        @Column(name = "baselineId", nullable = false)
-        public long baselineId;
-
-        public ConfigId() {
-            this.configurationId = 0;
-            this.baselineId = 0;
-        }
-    }
-
-    @EmbeddedId
-    ConfigId configId;
+    @Column(name = "baselineId", nullable = false)
+    public long baselineId;
 
     private String name;
     private String description;
     private long customerId;
 
     public Configuration() {
-        configId = new ConfigId();
-        configId.configurationId = 0;
-        configId.baselineId= 0;
+        this.configurationId = 0;
+        this.baselineId= 0;
         this.name = name;
         this.description = "";
         customerId = 0;
     }
 
     public Configuration(long configurationId, long baselineNumber, String name, String description, long customerId) {
-        configId = new ConfigId();
-        configId.configurationId = configurationId;
-        configId.baselineId= baselineNumber;
+        this.configurationId = configurationId;
+        this.baselineId= baselineNumber;
         this.name = name;
         this.description = description;
         this.customerId = customerId;
     }
 
     public long getConfigurationId() {
-        return configId.configurationId;
+        return this.configurationId;
     }
 
     public void setConfigurationId(long configurationId) {
-        configId.configurationId = configurationId;
+        this.configurationId = configurationId;
     }
 
     public long getBaselineId() {
-        return configId.baselineId;
+        return this.baselineId;
     }
 
     public void setBaselineId(long baselineId) {
-        configId.baselineId = baselineId;
+        this.baselineId = baselineId;
     }
 
     public String getName() {
