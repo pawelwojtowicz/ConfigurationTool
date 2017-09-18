@@ -40,7 +40,7 @@ public class ConfigurationElement {
     @JoinColumn( name = "templateId" , insertable = false, updatable = false)
     Template template;
 
-    @OneToMany( mappedBy = "parentConfigElement", cascade =  CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany( mappedBy = "parentConfigElement", cascade =  CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value="parentConfigElement")
     Set<ConfigurationElementParameter> configurationElementParameters;
 

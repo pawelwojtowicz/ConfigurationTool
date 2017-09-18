@@ -25,7 +25,7 @@ public class Configuration {
     private String description;
     private long customerId;
 
-    @OneToMany(mappedBy = "parentConfiguration", cascade =  CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parentConfiguration", cascade =  CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value="parentConfiguration")
     Set<ConfigurationElement> configurationElements;
 
