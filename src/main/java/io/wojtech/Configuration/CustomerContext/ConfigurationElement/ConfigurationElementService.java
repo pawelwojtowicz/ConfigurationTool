@@ -2,6 +2,8 @@ package io.wojtech.Configuration.CustomerContext.ConfigurationElement;
 
 import io.wojtech.Configuration.CustomerContext.Configuration.Configuration;
 import io.wojtech.Configuration.CustomerContext.Configuration.ConfigurationRepository;
+import io.wojtech.Configuration.CustomerContext.ConfigurationElementParameter.ConfigurationElementParameter;
+import io.wojtech.Configuration.CustomerContext.ConfigurationElementParameter.ConfigurationElementParameterRepository;
 import io.wojtech.Configuration.Template.Template;
 import io.wojtech.Configuration.Template.TemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -27,6 +30,9 @@ public class ConfigurationElementService {
     @Autowired
     TemplateRepository templateRepository;
 
+    @Autowired
+    ConfigurationElementParameterRepository configElementRepository;
+
 
     void addConfigrationElement(ConfigurationElement configurationElement )
     {
@@ -36,7 +42,16 @@ public class ConfigurationElementService {
         Template template = templateRepository.findByTemplateId(configurationElement.getTemplateId());
         configurationElement.setTemplate(template);
 
+        Set<ConfigurationElementParameter> configElementParameters = configurationElement.getConfigurationElementParameters();
+
+
         ConfigurationElement addedElement = configurationElementRepository.save(configurationElement);
+
+        for( ConfigurationElementParameter configurationElementParameter : configElementParameters) {
+            configurationElementParameter.setConfigurationElementId(addedElement.getConfigurationElementId());
+            configElementRepository.save(configurationElementParameter);
+        }
+
     }
 
     void updateConfigurationElement( ConfigurationElement configurationElement)

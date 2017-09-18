@@ -2,10 +2,12 @@ package io.wojtech.Configuration.CustomerContext.ConfigurationElement;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.wojtech.Configuration.CustomerContext.Configuration.Configuration;
+import io.wojtech.Configuration.CustomerContext.ConfigurationElementParameter.ConfigurationElementParameter;
 import io.wojtech.Configuration.Template.Template;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by user on 2017-08-13.
@@ -37,6 +39,10 @@ public class ConfigurationElement {
     @ManyToOne()
     @JoinColumn( name = "templateId" , insertable = false, updatable = false)
     Template template;
+
+    @OneToMany( mappedBy = "parentConfigElement", cascade =  CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value="parentConfigElement")
+    Set<ConfigurationElementParameter> configurationElementParameters;
 
     public ConfigurationElement() {
         this.configurationElementId = 0;
@@ -109,4 +115,14 @@ public class ConfigurationElement {
     public void setTemplate(Template template) {
         this.template = template;
     }
+
+    public Set<ConfigurationElementParameter> getConfigurationElementParameters() {
+        return configurationElementParameters;
+    }
+
+    public void setConfigurationElementParameters(Set<ConfigurationElementParameter> configurationElementParameters) {
+        this.configurationElementParameters = configurationElementParameters;
+    }
+
+
 }

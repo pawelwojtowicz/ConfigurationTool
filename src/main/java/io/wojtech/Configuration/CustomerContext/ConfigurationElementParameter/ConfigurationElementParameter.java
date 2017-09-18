@@ -1,9 +1,8 @@
 package io.wojtech.Configuration.CustomerContext.ConfigurationElementParameter;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import io.wojtech.Configuration.CustomerContext.ConfigurationElement.ConfigurationElement;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -25,8 +24,6 @@ public class ConfigurationElementParameter {
             this.configurationElementId = configurationElementId;
             this.templateParameterId = templateParameterId;
             this.baselineId = baselineId;
-
-
         }
 
         @Column( name = "configurationElementId", nullable = false)
@@ -41,6 +38,11 @@ public class ConfigurationElementParameter {
 
     @EmbeddedId
     ConfigurationElementParameterId configElementId;
+
+
+    @ManyToOne()
+    @JoinColumn( name = "configurationElementId", insertable = false, updatable = false )
+    ConfigurationElement parentConfigElement;
 
     String templateParameterValue;
 
@@ -84,5 +86,21 @@ public class ConfigurationElementParameter {
 
     public void setTemplateParameterValue(String templateParameterValue) {
         this.templateParameterValue = templateParameterValue;
+    }
+
+    public ConfigurationElementParameterId getConfigElementId() {
+        return configElementId;
+    }
+
+    public void setConfigElementId(ConfigurationElementParameterId configElementId) {
+        this.configElementId = configElementId;
+    }
+
+    public ConfigurationElement getParentConfigElement() {
+        return parentConfigElement;
+    }
+
+    public void setParentConfigElement(ConfigurationElement parentConfigElement) {
+        this.parentConfigElement = parentConfigElement;
     }
 }
