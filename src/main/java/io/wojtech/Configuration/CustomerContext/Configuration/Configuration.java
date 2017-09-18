@@ -1,7 +1,11 @@
 package io.wojtech.Configuration.CustomerContext.Configuration;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.wojtech.Configuration.CustomerContext.ConfigurationElement.ConfigurationElement;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by user on 2017-08-13.
@@ -20,6 +24,11 @@ public class Configuration {
     private String name;
     private String description;
     private long customerId;
+
+    @OneToMany(mappedBy = "parentConfiguration", cascade =  CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value="parentConfiguration")
+    Set<ConfigurationElement> configurationElements;
+
 
     public Configuration() {
         this.configurationId = 0;
@@ -75,5 +84,13 @@ public class Configuration {
 
     public void setCustomerId(long customerId) {
         this.customerId = customerId;
+    }
+
+    public Set<ConfigurationElement> getConfigurationElements() {
+        return configurationElements;
+    }
+
+    public void setConfigurationElements(Set<ConfigurationElement> configurationElements) {
+        this.configurationElements = configurationElements;
     }
 }

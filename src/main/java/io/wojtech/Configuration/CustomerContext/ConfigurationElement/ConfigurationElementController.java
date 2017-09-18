@@ -1,5 +1,7 @@
 package io.wojtech.Configuration.CustomerContext.ConfigurationElement;
 
+import io.wojtech.Configuration.CustomerContext.Configuration.Configuration;
+import io.wojtech.Configuration.CustomerContext.Configuration.ConfigurationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +33,7 @@ public class ConfigurationElementController {
     @RequestMapping( method = RequestMethod.DELETE, value = "/configurationelement/{configurationElementId}")
     void deleteConfigurationElement(@PathVariable long configurationElementId)
     {
-        configurationElementService.deleteConfigurationElement(configurationElementId,0);
+        configurationElementService.deleteConfigurationElement(configurationElementId);
     }
 
     @RequestMapping( method = RequestMethod.GET , value = "/configurationelement")

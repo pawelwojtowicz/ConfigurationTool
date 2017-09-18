@@ -1,5 +1,7 @@
 package io.wojtech.Configuration.CustomerContext.ConfigurationElement;
 
+import io.wojtech.Configuration.CustomerContext.Configuration.Configuration;
+import io.wojtech.Configuration.CustomerContext.Configuration.ConfigurationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +19,17 @@ public class ConfigurationElementService {
     @Autowired
     ConfigurationElementRepository configurationElementRepository;
 
+    @Autowired
+    ConfigurationRepository configurationRepository;
+
+
     void addConfigrationElement(ConfigurationElement configurationElement )
     {
-        configurationElementRepository.save(configurationElement);
+        Configuration parentConfiguration = configurationRepository.findOne(configurationElement.getParentConfigurationId());
+
+        configurationElement.setParentConfiguration(parentConfiguration);
+
+        ConfigurationElement addedElement = configurationElementRepository.save(configurationElement);
     }
 
     void updateConfigurationElement( ConfigurationElement configurationElement)
@@ -27,10 +37,9 @@ public class ConfigurationElementService {
         configurationElementRepository.save(configurationElement);
     }
 
-    void deleteConfigurationElement(long configurationElementId, long baselineId)
+    void deleteConfigurationElement(long configurationElementId)
     {
-        ConfigurationElement.ConfigElementId configElementId = new ConfigurationElement.ConfigElementId(configurationElementId,baselineId);
-        configurationElementRepository.delete(configElementId);
+        configurationElementRepository.delete(configurationElementId);
     }
 
     List<ConfigurationElement> getAllConfigurationElements()
@@ -43,7 +52,7 @@ public class ConfigurationElementService {
         List<ConfigurationElement> elementsForConfiguration = new ArrayList<ConfigurationElement>();
 
         elementsForConfiguration.addAll(configurationElementRepository.findAll().stream()
-                .filter(configurationElement -> configurationElement.getConfigurationId() == configurationId)
+                .filter(configurationElement -> configurationElement.getParentConfigurationId() == configurationId)
                 .collect(Collectors.toList()));
 
         return elementsForConfiguration;

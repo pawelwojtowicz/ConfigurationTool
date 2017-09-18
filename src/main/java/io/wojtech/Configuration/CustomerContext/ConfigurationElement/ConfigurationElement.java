@@ -1,5 +1,7 @@
 package io.wojtech.Configuration.CustomerContext.ConfigurationElement;
 
+import io.wojtech.Configuration.CustomerContext.Configuration.Configuration;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -11,72 +13,64 @@ import java.io.Serializable;
 @Entity
 public class ConfigurationElement {
 
-    @Embeddable
-    static public class ConfigElementId implements Serializable
-    {
-        public ConfigElementId() {
-            this.configurationElementId = 0;
-            this.baselineId= 0;
-        }
+    @Id
+    @Column( name = "configurationElementId", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    public long configurationElementId;
 
-        public ConfigElementId(long configurationElementId, long baselineId) {
-            this.configurationElementId = configurationElementId;
-            this.baselineId= baselineId;
-        }
+    @Column(name = "baselineId",nullable = false)
+    public long baselineId;
 
-        @Column( name = "configurationElementId", nullable = false)
-        @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        public long configurationElementId;
-
-        @Column(name = "baselineId",nullable = false)
-        public long baselineId;
-    }
-    @EmbeddedId
-    private ConfigElementId configElementId;
-
-    long configurationId;
+    @Column(name = "parentConfigurationId")
+    long parentConfigurationId;
 
     long templateId;
 
     String genericTemplatePath;
 
+    @ManyToOne()
+    @JoinColumn(name = "parentConfigurationId",  insertable = false, updatable = false)
+    Configuration parentConfiguration;
+
 
     public ConfigurationElement() {
-        this.configElementId = new ConfigElementId( 0,0);
-        this.configurationId = 0;
+        this.configurationElementId = 0;
+        this.baselineId = 0;
+        this.parentConfigurationId = 0;
         this.templateId = 0;
         this.genericTemplatePath = "";
     }
 
     public ConfigurationElement(long configurationElementId, long baselineId, long configurationId, long templateId) {
-        this.configElementId = new ConfigElementId( configurationElementId, baselineId );
-        this.configurationId = configurationId;
+        this.configurationElementId = configurationElementId;
+        this.baselineId = baselineId;
+        this.parentConfigurationId = configurationId;
         this.templateId = templateId;
         this.genericTemplatePath = "";
     }
 
     public long getConfigurationElementId() {
-        return configElementId.configurationElementId;
+        return this.configurationElementId;
     }
 
     public void setConfigurationElementId(long configurationElementId) {
-        this.configElementId.configurationElementId = configurationElementId;
+        this.configurationElementId = configurationElementId;
     }
 
     public long getBaselineId() {
-        return configElementId.baselineId;
+        return this.baselineId;
     }
 
     public void setBaselineId(long baselineId) {
-        this.configElementId.baselineId = baselineId;
+        this.baselineId = baselineId;
     }
 
-    public long getConfigurationId() {
-        return configurationId;
+    public long getParentConfigurationId() {
+        return parentConfigurationId;
     }
 
-    public void setConfigurationId(long configurationId) {
-        this.configurationId = configurationId;
+    public void setParentConfigurationId(long configurationId) {
+        this.parentConfigurationId= configurationId;
     }
 
     public long getTemplateId() {
@@ -93,5 +87,13 @@ public class ConfigurationElement {
 
     public void setGenericTemplatePath(String genericTemplatePath) {
         this.genericTemplatePath = genericTemplatePath;
+    }
+
+    public Configuration getParentConfiguration() {
+        return parentConfiguration;
+    }
+
+    public void setParentConfiguration(Configuration parentConfiguration) {
+        this.parentConfiguration = parentConfiguration;
     }
 }

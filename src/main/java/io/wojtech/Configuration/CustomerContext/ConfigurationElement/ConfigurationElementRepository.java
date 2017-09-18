@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
  * Created by user on 2017-08-14.
  */
 @Repository
-public interface ConfigurationElementRepository extends JpaRepository<ConfigurationElement, ConfigurationElement.ConfigElementId> {
+public interface ConfigurationElementRepository extends JpaRepository<ConfigurationElement, Long> {
 }
