@@ -2,6 +2,8 @@ package io.wojtech.Configuration.CustomerContext.ConfigurationElement;
 
 import io.wojtech.Configuration.CustomerContext.Configuration.Configuration;
 import io.wojtech.Configuration.CustomerContext.Configuration.ConfigurationRepository;
+import io.wojtech.Configuration.Template.Template;
+import io.wojtech.Configuration.Template.TemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +24,17 @@ public class ConfigurationElementService {
     @Autowired
     ConfigurationRepository configurationRepository;
 
+    @Autowired
+    TemplateRepository templateRepository;
+
 
     void addConfigrationElement(ConfigurationElement configurationElement )
     {
         Configuration parentConfiguration = configurationRepository.findOne(configurationElement.getParentConfigurationId());
-
         configurationElement.setParentConfiguration(parentConfiguration);
+
+        Template template = templateRepository.findByTemplateId(configurationElement.getTemplateId());
+        configurationElement.setTemplate(template);
 
         ConfigurationElement addedElement = configurationElementRepository.save(configurationElement);
     }

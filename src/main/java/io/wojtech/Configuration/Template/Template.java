@@ -2,6 +2,7 @@ package io.wojtech.Configuration.Template;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.wojtech.Configuration.CustomerContext.ConfigurationElement.ConfigurationElement;
 import io.wojtech.Configuration.TemplateElement.TemplateElement;
 import io.wojtech.Configuration.TemplateParameter.TemplateParameter;
 
@@ -51,6 +52,13 @@ public class Template {
     @ManyToMany( mappedBy = "templateRestrictions", fetch = FetchType.LAZY )
     @JsonIgnore
     private Set<Template> restrictedTemplates;
+
+    @OneToMany(mappedBy = "template", cascade =  CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value="template")
+    @JsonIgnore
+    Set<ConfigurationElement> configurationElements;
+
+
 
     public Template() {
         this.templateId = 0;
@@ -168,5 +176,13 @@ public class Template {
 
     public void setRestrictedTemplates(Set<Template> restrictedTemplates) {
         this.restrictedTemplates = restrictedTemplates;
+    }
+
+    public Set<ConfigurationElement> getConfigurationElements() {
+        return configurationElements;
+    }
+
+    public void setConfigurationElements(Set<ConfigurationElement> configurationElements) {
+        this.configurationElements = configurationElements;
     }
 }
