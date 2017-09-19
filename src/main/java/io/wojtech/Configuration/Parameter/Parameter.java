@@ -20,6 +20,7 @@ public class Parameter {
     private String Unit;
     private String Value;
     private String Description;
+    private int genericPath;
 
     @ManyToOne()
     @JoinColumn(name = "configurationItemId")
@@ -42,6 +43,7 @@ public class Parameter {
         this.configurationItem = null;
         ValidFromReleaseId = 0;
         ValidToReleaseId = 0;
+        genericPath = 0;
     }
 
     public Parameter(long parameterId, String name, String path, String type, String unit, String value, String description, ConfigurationItem configurationItem, long validFromReleaseId, long validToReleaseId) {
@@ -55,6 +57,7 @@ public class Parameter {
         this.configurationItem = configurationItem;
         ValidFromReleaseId = validFromReleaseId;
         ValidToReleaseId = validToReleaseId;
+        genericPath = 0;
     }
 
     public long getParameterId() {
@@ -135,5 +138,13 @@ public class Parameter {
 
     public void setValidToReleaseId(long validToReleaseId) {
         ValidToReleaseId = validToReleaseId;
+    }
+
+    public int getGenericPath() {
+        return genericPath;
+    }
+
+    public void setGenericPath(int genericPath) {
+        this.genericPath = genericPath;
     }
 }

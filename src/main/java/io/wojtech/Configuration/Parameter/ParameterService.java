@@ -17,6 +17,21 @@ public class ParameterService {
 
     public void addParameter( Parameter parameter)
     {
+        String parametersPath = parameter.getPath();
+        int scanState = 0;
+
+        for ( int i = 0; i < parametersPath.length() ; ++i) {
+            if ( scanState == 0 && '[' == parametersPath.charAt(i)) {
+                scanState = 1;
+            }
+            else if ( 1 == scanState && ']' == parametersPath.charAt(i))
+            {
+                scanState = 2;
+            }
+        }
+
+
+        parameter.setGenericPath( (scanState==2)? 1 : 0);
         parameterRepository.save(parameter);
     }
 
