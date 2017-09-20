@@ -59,11 +59,7 @@ public class TemplateElementService {
 
     List<TemplateElement> getElementsOfTemplate( long templateId)
     {
-        List<TemplateElement> listOfTemplateElements = new ArrayList<TemplateElement>();
-        listOfTemplateElements.addAll(templateElementRepository.findAll().stream()
-                .filter(templateElement -> templateElement.getTemplateId() == templateId )
-                .collect(Collectors.toList()));
 
-        return listOfTemplateElements;
+        return templateElementRepository.findByTemplateElementIdTemplateId(templateId);
     }
 }

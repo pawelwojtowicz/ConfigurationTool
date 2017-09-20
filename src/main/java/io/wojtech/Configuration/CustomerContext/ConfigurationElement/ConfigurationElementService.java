@@ -71,13 +71,7 @@ public class ConfigurationElementService {
 
     List<ConfigurationElement> getElementsForConfiguration( long configurationId )
     {
-        List<ConfigurationElement> elementsForConfiguration = new ArrayList<ConfigurationElement>();
-
-        elementsForConfiguration.addAll(configurationElementRepository.findAll().stream()
-                .filter(configurationElement -> configurationElement.getParentConfigurationId() == configurationId)
-                .collect(Collectors.toList()));
-
-        return elementsForConfiguration;
+        return configurationElementRepository.findByParentConfigurationId(configurationId);
     }
 
 }

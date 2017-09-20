@@ -15,11 +15,11 @@ import java.io.Serializable;
 @Entity
 public class TemplateElement {
     public TemplateElement() {
-        templateElementID = new TemplateElementId(0, 0 );
+        templateElementId = new TemplateElementId(0, 0 );
         templateParameterId = 0;
     }
     public TemplateElement(long templateId, long parameterId, long templateParameterId) {
-        templateElementID = new TemplateElementId(templateId, parameterId );
+        templateElementId = new TemplateElementId(templateId, parameterId );
         templateParameterId = templateParameterId;
     }
 
@@ -58,7 +58,7 @@ public class TemplateElement {
         public long parameterId;
     }
     @EmbeddedId
-    private TemplateElementId templateElementID;
+    private TemplateElementId templateElementId;
 
     @Column(name = "templateParameterId")
     private long templateParameterId;
@@ -84,16 +84,16 @@ public class TemplateElement {
         templateParameterId = templateParameterName;
     }
     public long getTemplateId() {
-        return templateElementID.templateId;
+        return templateElementId.templateId;
     }
     public void setTemplateId(long templateId) {
-        templateElementID.templateId = templateId;
+        templateElementId.templateId = templateId;
     }
     public long getParameterId() {
-        return templateElementID.parameterId;
+        return templateElementId.parameterId;
     }
     public void setParameterId(long parameterId) {
-        templateElementID.parameterId = parameterId;
+        templateElementId.parameterId = parameterId;
     }
 
     public Template getParentTemplate() {
@@ -112,12 +112,12 @@ public class TemplateElement {
         this.parameter = parameter;
     }
 
-    public TemplateElementId getTemplateElementID() {
-        return templateElementID;
+    public TemplateElementId getTemplateElementId() {
+        return templateElementId;
     }
 
-    public void setTemplateElementID(TemplateElementId templateElementID) {
-        this.templateElementID = templateElementID;
+    public void setTemplateElementID(TemplateElementId templateElementId) {
+        this.templateElementId = templateElementId;
     }
 
     public TemplateParameter getTemplateParameter() {
