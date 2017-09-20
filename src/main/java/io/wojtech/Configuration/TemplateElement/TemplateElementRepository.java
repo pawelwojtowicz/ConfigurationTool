@@ -11,4 +11,6 @@ public interface TemplateElementRepository extends JpaRepository<TemplateElement
 	
 	List<TemplateElement> findByTemplateElementIdTemplateId(long templateId);
 
+	long deleteByTemplateElementIdTemplateId(long templateId);
+
 }

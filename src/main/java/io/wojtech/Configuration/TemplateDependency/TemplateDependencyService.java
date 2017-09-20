@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,12 +36,11 @@ public class TemplateDependencyService {
 
     public List<TemplateDependency> getDependenciesForTemplate( long templateId)
     {
-        List<TemplateDependency> listOfDependenciesForTemplate= new ArrayList<TemplateDependency>();
-        listOfDependenciesForTemplate.addAll(templateDependencyRepository.findAll().stream()
-                .filter(dependency-> dependency.getTemplateId() == templateId )
-                .collect(Collectors.toList()));
-
-        return listOfDependenciesForTemplate;
+        return templateDependencyRepository.findByTemplateDependencyIdTemplateId(templateId);
     }
 
+    @Transactional
+    public long deleteTemplateDependencies(long templateId ) {
+        return templateDependencyRepository.deleteByTemplateDependencyIdTemplateId(templateId);
+    }
 }

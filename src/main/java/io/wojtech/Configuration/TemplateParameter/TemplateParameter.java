@@ -15,31 +15,33 @@ public class TemplateParameter {
     public TemplateParameter() {
         this.templateParameterId = 0;
         this.templateId = 0;
-        Name = "";
-        Value = "";
-        Description = "";
-        OwnerId = "";
+        name = "";
+        value = "";
+        description = "";
+        ownerId = "";
+        parameterType = 0;
     }
 
-    public TemplateParameter(long templateParameterId, long templateId, String name, String value, String description ,String ownerId) {
+    public TemplateParameter(long templateParameterId, long templateId, String name, String value, String description ,String ownerId, int parameterType) {
         this.templateParameterId = templateParameterId;
         this.templateId = templateId;
-        Name = name;
-        Value = value;
-        Description = description;
-        OwnerId = ownerId;
+        this.name = name;
+        this.value = value;
+        this.description = description;
+        this.ownerId = ownerId;
+        this.parameterType = parameterType;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getValue() {
-        return Value;
+        return value;
     }
 
     public long getTemplateParameterId() {
@@ -51,23 +53,23 @@ public class TemplateParameter {
     }
 
     public void setValue(String value) {
-        Value = value;
+        this.value = value;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public String getOwnerId() {
-        return OwnerId;
+        return ownerId;
     }
 
     public void setOwnerId(String ownerId) {
-        OwnerId = ownerId;
+        this.ownerId = ownerId;
     }
 
     public long getTemplateId() {
@@ -86,15 +88,24 @@ public class TemplateParameter {
         this.parentTemplate = parentTemplate;
     }
 
+    public int getParameterType() {
+        return parameterType;
+    }
+
+    public void setParameterType(int parameterType) {
+        this.parameterType = parameterType;
+    }
+
     @Id
     @GeneratedValue( strategy = GenerationType.SEQUENCE )
     private long templateParameterId;
 
-    private String Name;
-    private String Value;
-    private String Description;
-    private String OwnerId;
+    private String name;
+    private String value;
+    private String description;
+    private String ownerId;
     private long templateId;
+    private int parameterType;
 
     @ManyToOne( )
     @JoinColumn( name = "templateId",  insertable = false, updatable = false)

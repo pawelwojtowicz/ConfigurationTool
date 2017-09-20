@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,12 +38,12 @@ public class TemplateRestrictionService {
 
     public List<TemplateRestriction> getRestrictionsForTemplate( long templateId)
     {
-        List<TemplateRestriction> listOfRestrictionsForTemplate = new ArrayList<TemplateRestriction>();
-        listOfRestrictionsForTemplate.addAll(templateRestrictionRepository.findAll().stream()
-                .filter(restriction -> restriction.getTemplateId() == templateId )
-                .collect(Collectors.toList()));
+        return templateRestrictionRepository.findByTemplateRestrictionIdTemplateId(templateId);
+    }
 
-        return listOfRestrictionsForTemplate;
+    @Transactional
+    public long deleteRestrictionsForTemplate( long templateId ){
+        return templateRestrictionRepository.deleteByTemplateRestrictionIdTemplateId(templateId);
     }
 
 }

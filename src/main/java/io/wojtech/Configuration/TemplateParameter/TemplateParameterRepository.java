@@ -10,4 +10,6 @@ import java.util.List;
 public interface TemplateParameterRepository extends JpaRepository<TemplateParameter,Long> {
 
     List<TemplateParameter> findByTemplateId(long TemplateId);
+
+    long deleteByTemplateId(long templateId);
 }

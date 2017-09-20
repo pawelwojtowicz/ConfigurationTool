@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -38,5 +39,10 @@ public class TemplateParameterService {
     public List<TemplateParameter> getParametersForTemplate( long templateId)
     {
         return templateParameterRepository.findByTemplateId(templateId);
+    }
+
+    @Transactional
+    public long deleteTemplateParameters(long templateId) {
+        return templateParameterRepository.deleteByTemplateId(templateId);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -62,4 +63,11 @@ public class TemplateElementService {
 
         return templateElementRepository.findByTemplateElementIdTemplateId(templateId);
     }
+
+    @Transactional
+    public long deleteTemplateElements( long templateId ){
+        return templateElementRepository.deleteByTemplateElementIdTemplateId(templateId);
+    }
+
+
 }

@@ -12,17 +12,17 @@ public class TemplateRestriction {
     static public class TemplateRestrictionId implements Serializable
     {
         public TemplateRestrictionId() {
-            TemplateId = 0;
+            templateId = 0;
             RestrictedTemplateId = 0;
         }
 
         public TemplateRestrictionId(long templateId, long restrictedTemplateId) {
-            TemplateId = templateId;
+            this.templateId = templateId;
             RestrictedTemplateId = restrictedTemplateId;
         }
 
         @Column(name = "templateId", nullable = false)
-        public long TemplateId;
+        public long templateId;
 
         @Column(name = "restrictedTemplateId", nullable = false)
         public long RestrictedTemplateId;
@@ -39,10 +39,10 @@ public class TemplateRestriction {
         this.templateRestrictionId = new TemplateRestrictionId(templateId, longRestrictedTemplateId);
     }
     public long getTemplateId() {
-        return templateRestrictionId.TemplateId;
+        return templateRestrictionId.templateId;
     }
     public void setTemplateId(long templateId) {
-        templateRestrictionId.TemplateId = templateId;
+        templateRestrictionId.templateId = templateId;
     }
     public long getRestrictedTemplateId() {
         return templateRestrictionId.RestrictedTemplateId;

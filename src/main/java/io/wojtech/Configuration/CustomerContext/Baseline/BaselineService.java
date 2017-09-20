@@ -38,12 +38,6 @@ public class BaselineService {
 
     public List<Baseline> getBaselinesForCustomer( long customerId)
     {
-        List<Baseline> customerBaselines = new ArrayList<Baseline>();
-
-        customerBaselines.addAll(baselineRepository.findAll().stream()
-                .filter(baseline-> baseline.getCustomerId() == customerId )
-                .collect(Collectors.toList()));
-
-        return customerBaselines;
+        return baselineRepository.findByCustomerId(customerId);
     }
 }

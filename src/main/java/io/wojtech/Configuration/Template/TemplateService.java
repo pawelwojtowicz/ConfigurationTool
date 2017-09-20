@@ -1,11 +1,18 @@
 package io.wojtech.Configuration.Template;
 
+import io.wojtech.Configuration.CustomerContext.ConfigurationElement.ConfigurationElementService;
+import io.wojtech.Configuration.TemplateDependency.TemplateDependency;
+import io.wojtech.Configuration.TemplateDependency.TemplateDependencyService;
+import io.wojtech.Configuration.TemplateElement.TemplateElementService;
 import io.wojtech.Configuration.TemplateParameter.TemplateParameter;
 import io.wojtech.Configuration.TemplateParameter.TemplateParameterRepository;
+import io.wojtech.Configuration.TemplateParameter.TemplateParameterService;
+import io.wojtech.Configuration.TemplateRestriction.TemplateRestrictionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +25,16 @@ public class TemplateService {
     TemplateRepository templateRepository;
 
     @Autowired
-    TemplateParameterRepository parametersRepository;
+    TemplateElementService templateElementService;
+
+    @Autowired
+    TemplateDependencyService templateDependencyService;
+
+    @Autowired
+    TemplateRestrictionService templateRestrictionService;
+
+    @Autowired
+    TemplateParameterService templateParameterService;
 
     void addTemplate(Template template)
     {
@@ -28,15 +44,9 @@ public class TemplateService {
 
         for ( TemplateParameter templateParameter : templateParametersSet) {
             templateParameter.setTemplateId(savedTemplate.getTemplateId());
-            parametersRepository.save(templateParameter);
+            templateParameterService.addTemplateParameter(templateParameter);
 
         };
-
-
-        List<TemplateParameter> parametersy = parametersRepository.findAll();
-
-        int a =1;
-
     }
 
     void updateTemplate(Template template)
@@ -44,8 +54,13 @@ public class TemplateService {
         templateRepository.save(template);
     }
 
+    @Transactional
     void deleteTemplate(long templateId )
     {
+        templateDependencyService.deleteTemplateDependencies(templateId);
+        templateRestrictionService.deleteRestrictionsForTemplate(templateId);
+        templateElementService.deleteTemplateElements(templateId);
+        templateParameterService.deleteTemplateParameters(templateId);
         templateRepository.delete(templateId);
     }
 
