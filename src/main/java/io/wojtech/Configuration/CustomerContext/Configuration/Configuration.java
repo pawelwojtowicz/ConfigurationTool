@@ -1,7 +1,10 @@
 package io.wojtech.Configuration.CustomerContext.Configuration;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.wojtech.Configuration.CustomerContext.ConfigurationElement.ConfigurationElement;
+import io.wojtech.Configuration.CustomerContext.ConfigurationGroup.ConfigurationGroup;
+import io.wojtech.Configuration.Module.Module;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,6 +31,10 @@ public class Configuration {
     @OneToMany(mappedBy = "parentConfiguration", cascade =  CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value="parentConfiguration")
     Set<ConfigurationElement> configurationElements;
+
+    @ManyToMany( mappedBy = "configurations", fetch = FetchType.LAZY )
+    @JsonIgnore
+    private Set<ConfigurationGroup> configurationGroups;
 
 
     public Configuration() {
@@ -92,5 +99,13 @@ public class Configuration {
 
     public void setConfigurationElements(Set<ConfigurationElement> configurationElements) {
         this.configurationElements = configurationElements;
+    }
+
+    public Set<ConfigurationGroup> getConfigurationGroups() {
+        return configurationGroups;
+    }
+
+    public void setConfigurationGroups(Set<ConfigurationGroup> configurationGroups) {
+        this.configurationGroups = configurationGroups;
     }
 }

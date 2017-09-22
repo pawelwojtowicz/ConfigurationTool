@@ -9,6 +9,5 @@ import java.util.List;
  */
 @Repository
 public interface ConfigurationElementRepository extends JpaRepository<ConfigurationElement, Long> {
-	
 	List<ConfigurationElement> findByParentConfigurationId(long configurationId);
 }
