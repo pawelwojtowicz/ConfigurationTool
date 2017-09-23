@@ -28,7 +28,7 @@ public class ConfigurationGroupService {
     }
 
     ConfigurationGroup getConfigurationGroup( long configurationGroupId) {
-        return configurationGroupRepository.findByConfigurationId(configurationGroupId);
+        return configurationGroupRepository.findByConfigurationGroupId(configurationGroupId);
     }
 
     List<ConfigurationGroup> getAllConfigurationGroups() {

@@ -9,5 +9,5 @@ import java.util.List;
  * Created by user on 2017-09-22.
  */
 public interface ConfigurationGroupRepository extends JpaRepository<ConfigurationGroup, Long> {
-    ConfigurationGroup findByConfigurationId(long configurationId);
+    ConfigurationGroup findByConfigurationGroupId(long configurationId);
 }

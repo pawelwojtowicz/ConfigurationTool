@@ -1,6 +1,5 @@
 package io.wojtech.Configuration.CustomerContext.ConfigurationGroup;
 
-import io.wojtech.Configuration.ConfigurationItem.ConfigurationItem;
 import io.wojtech.Configuration.CustomerContext.Configuration.Configuration;
 
 import javax.persistence.*;
