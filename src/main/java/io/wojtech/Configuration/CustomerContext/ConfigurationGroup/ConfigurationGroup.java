@@ -1,8 +1,12 @@
 package io.wojtech.Configuration.CustomerContext.ConfigurationGroup;
 
 import io.wojtech.Configuration.CustomerContext.Configuration.Configuration;
+import io.wojtech.Configuration.CustomerContext.Node.Node;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Set;
 
 /**
@@ -24,6 +28,11 @@ public class ConfigurationGroup {
             joinColumns = @JoinColumn(name = "configurationGroupId", referencedColumnName = "configurationGroupId"),
             inverseJoinColumns = @JoinColumn( name ="configurationId", referencedColumnName = "configurationId"))
     private Set<Configuration> configurations;
+    
+    
+    @OneToMany(mappedBy = "nodeConfiguration", cascade =  CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value="nodeConfiguration")
+    Set<Node> configuredNodes;
 
 
     public ConfigurationGroup() {
@@ -82,5 +91,7 @@ public class ConfigurationGroup {
     public void setConfigurations(Set<Configuration> configItems) {
         this.configurations = configItems;
     }
+    
+    
 }
 
