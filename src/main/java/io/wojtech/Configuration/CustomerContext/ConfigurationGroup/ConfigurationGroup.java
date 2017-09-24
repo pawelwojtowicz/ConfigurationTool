@@ -75,11 +75,11 @@ public class ConfigurationGroup {
         this.customerId = customerId;
     }
 
-    public Set<Configuration> getConfigItems() {
+    public Set<Configuration> getConfigurations() {
         return configurations;
     }
 
-    public void setConfigItems(Set<Configuration> configItems) {
+    public void setConfigurations(Set<Configuration> configItems) {
         this.configurations = configItems;
     }
 }

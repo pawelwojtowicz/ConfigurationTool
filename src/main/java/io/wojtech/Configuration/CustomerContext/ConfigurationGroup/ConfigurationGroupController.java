@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -17,12 +18,12 @@ public class ConfigurationGroupController {
     ConfigurationGroupService configurationGroupService;
 
     @RequestMapping( method = RequestMethod.POST , value = "/configurationgroup")
-    void addConfigurationGroup(ConfigurationGroup configurationGroup) {
-        configurationGroupService.addConfigurationGroup(configurationGroup);
+    ConfigurationGroup addConfigurationGroup(@RequestBody ConfigurationGroup configurationGroup) {
+        return configurationGroupService.addConfigurationGroup(configurationGroup);
     }
 
     @RequestMapping( method = RequestMethod.PUT , value = "/configurationgroup")
-    void updateConfigurationGroup( ConfigurationGroup configurationGroup) {
+    void updateConfigurationGroup( @RequestBody ConfigurationGroup configurationGroup) {
         configurationGroupService.modifyConfigurationGroup(configurationGroup);
     }
 

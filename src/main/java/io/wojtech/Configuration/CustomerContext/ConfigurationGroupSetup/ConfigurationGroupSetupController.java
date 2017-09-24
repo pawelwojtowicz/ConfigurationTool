@@ -21,6 +21,7 @@ public class ConfigurationGroupSetupController {
     @RequestMapping( method = RequestMethod.POST , value = "/configurationgroupsetup/{configurationGroupId}/{configurationId}")
     void addConfigurationToGroup(@PathVariable long configurationGroupId, @PathVariable long configurationId) {
         ConfigurationGroupSetup configurationGroupItem = new ConfigurationGroupSetup(configurationGroupId, configurationId);
+        configurationGroupService.addConfigurationGroupElement(configurationGroupItem);
     }
 
     @RequestMapping( method = RequestMethod.DELETE, value = "configurationgroupsetup/{configurationGroupId}/{configurationId}")

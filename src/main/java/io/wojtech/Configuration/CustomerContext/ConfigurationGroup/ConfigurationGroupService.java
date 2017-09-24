@@ -15,8 +15,8 @@ public class ConfigurationGroupService {
     @Autowired
     ConfigurationGroupRepository configurationGroupRepository;
 
-    void addConfigurationGroup(ConfigurationGroup configurationGroup) {
-        configurationGroupRepository.save(configurationGroup);
+    ConfigurationGroup addConfigurationGroup(ConfigurationGroup configurationGroup) {
+        return configurationGroupRepository.save(configurationGroup);
     }
 
     void modifyConfigurationGroup( ConfigurationGroup configurationGroup) {
