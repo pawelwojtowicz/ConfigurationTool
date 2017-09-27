@@ -14,9 +14,9 @@ public class ConfigurationItemService {
     @Autowired
     ConfigurationItemRepository configurationItemRepository;
 
-    void addConfigurationType( ConfigurationItem configurationItem)
+    ConfigurationItem addConfigurationType( ConfigurationItem configurationItem)
     {
-        configurationItemRepository.save(configurationItem);
+        return configurationItemRepository.save(configurationItem);
     }
 
     void updateConfigurationType( ConfigurationItem configurationItem)

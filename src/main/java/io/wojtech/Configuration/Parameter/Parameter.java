@@ -21,9 +21,10 @@ public class Parameter {
     private String Value;
     private String Description;
     private int genericPath;
+    private long configurationItemId;
 
     @ManyToOne()
-    @JoinColumn(name = "configurationItemId")
+    @JoinColumn(name = "configurationItemId", insertable = false, updatable = false)
     @JsonIgnoreProperties(value="configItemParameters")
     private ConfigurationItem configurationItem;
 
@@ -44,6 +45,7 @@ public class Parameter {
         ValidFromReleaseId = 0;
         ValidToReleaseId = 0;
         genericPath = 0;
+        configurationItemId = 0;
     }
 
     public Parameter(long parameterId, String name, String path, String type, String unit, String value, String description, ConfigurationItem configurationItem, long validFromReleaseId, long validToReleaseId) {
@@ -58,6 +60,7 @@ public class Parameter {
         ValidFromReleaseId = validFromReleaseId;
         ValidToReleaseId = validToReleaseId;
         genericPath = 0;
+        configurationItemId = 0;
     }
 
     public long getParameterId() {
@@ -146,5 +149,13 @@ public class Parameter {
 
     public void setGenericPath(int genericPath) {
         this.genericPath = genericPath;
+    }
+
+    public long getConfigurationItemId() {
+        return configurationItemId;
+    }
+
+    public void setConfigurationItemId(long configurationItemId) {
+        this.configurationItemId = configurationItemId;
     }
 }

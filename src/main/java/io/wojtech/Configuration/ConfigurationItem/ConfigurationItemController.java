@@ -14,9 +14,9 @@ public class ConfigurationItemController {
     private ConfigurationItemService configurationItemService;
 
     @RequestMapping( method = RequestMethod.POST , value = "/configurationitem")
-    void addConfigurationType(@RequestBody ConfigurationItem configurationItem)
+    ConfigurationItem addConfigurationType(@RequestBody ConfigurationItem configurationItem)
     {
-        configurationItemService.addConfigurationType(configurationItem);
+        return configurationItemService.addConfigurationType(configurationItem);
     }
 
     @RequestMapping( method = RequestMethod.PUT , value = "/configurationitem")

@@ -2,7 +2,10 @@ package io.wojtech.Configuration.CustomerContext.Node;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.wojtech.Configuration.CustomerContext.ConfigurationGroup.*;
+import io.wojtech.Configuration.Device.Device;
 
 @Entity
 public class Node {
@@ -17,12 +20,20 @@ public class Node {
 	@ManyToOne( )
 	@JoinColumn( name = "configurationGroupId",  insertable = false, updatable = false)
 	ConfigurationGroup nodeConfiguration;
+	
+	long deviceId;
 
+	@ManyToOne( )
+	@JoinColumn( name = "deviceId",  insertable = false, updatable = false)
+    Device device;
+    
 	public Node() {
 		this.nodeStringId = "";
 		this.description = "";
 		this.configurationGroupId = 0;
 		this.nodeConfiguration = null;
+		this.deviceId = 0;
+		this.device = null;
 	}
 
 	public String getNodeStringId() {
@@ -56,4 +67,22 @@ public class Node {
 	public void setNodeConfiguration(ConfigurationGroup nodeConfiguration) {
 		this.nodeConfiguration = nodeConfiguration;
 	}
+
+	public long getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(long deviceId) {
+		this.deviceId = deviceId;
+	}
+
+	public Device getDevice() {
+		return device;
+	}
+
+	public void setDevice(Device device) {
+		this.device = device;
+	}
+	
+	
 }

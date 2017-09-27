@@ -19,8 +19,9 @@ public class ConfigurationItem {
     private String Description;
     private String ExportType;
     private String FileName;
+    private int defaultBase;
 
-    @ManyToMany( mappedBy = "configItems", fetch = FetchType.LAZY )
+	@ManyToMany( mappedBy = "configItems", fetch = FetchType.LAZY )
     @JsonIgnore
     private Set<Module> modules;
 
@@ -33,6 +34,7 @@ public class ConfigurationItem {
         Description = "";
         ExportType = "";
         FileName = "";
+        defaultBase = 0;
     }
     public ConfigurationItem(long configurationItemId, String name, String description, String exportType, String fileName) {
         configurationItemId = configurationItemId;
@@ -40,6 +42,7 @@ public class ConfigurationItem {
         Description = description;
         ExportType = exportType;
         FileName = fileName;
+        defaultBase = 0;
     }
 
     public long getConfigurationItemId() {
@@ -97,4 +100,12 @@ public class ConfigurationItem {
     public void setConfigItemParameters(Set<Parameter> configItemParameters) {
         this.configItemParameters = configItemParameters;
     }
+    
+    public int getDefaultBase() {
+        return defaultBase;
+    }
+    public void setDefaultBase(int defaultBase) {
+        this.defaultBase = defaultBase;
+    }
+
 }

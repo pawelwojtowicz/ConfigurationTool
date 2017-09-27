@@ -2,14 +2,19 @@ package io.wojtech.Configuration.Export;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 
+import io.wojtech.Configuration.Parameter.Parameter;
+
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -18,18 +23,18 @@ import java.io.IOException;
 @RestController
 public class ExportController {
 
-    @RequestMapping(path = "/exportconfig/{moduleType}/{configType}", method= RequestMethod.GET)
-    public ResponseEntity<InputStreamResource> ExportSingleConfigItem( long moduleType, long configType) throws IOException
+    @Autowired
+    ExportService exportService;
+	
+    @RequestMapping(path = "/exportconfig/{nodeId}/{configurationItemId}", method= RequestMethod.GET)
+    public List<Parameter> ExportSingleConfigItem( @PathVariable String nodeId, @PathVariable long configurationItemId) throws IOException
     {
-        InputStreamResource fileStream = new InputStreamResource(new FileInputStream("c:\\Filename.txt"));
-        HttpHeaders headers = new HttpHeaders();
+  //      InputStreamResource fileStream = new InputStreamResource(new FileInputStream("c:\\Filename.txt"));
+  //      HttpHeaders headers = new HttpHeaders();
 
-        return ResponseEntity
-                .ok()
-                .headers(headers)
-                .contentLength(fileStream.contentLength())
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .body(fileStream);
+        
+    return exportService.ExportConfigItemForNode( configurationItemId, nodeId);
+        
     }
 
 
