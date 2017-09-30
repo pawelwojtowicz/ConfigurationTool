@@ -48,6 +48,21 @@ public class Parameter {
         configurationItemId = 0;
     }
 
+    public Parameter( Parameter parameter) {
+        this.parameterId = parameter.parameterId;
+        this.Name = parameter.Name;
+        this.Path = parameter.Path;
+        this.Type = parameter.Type;
+        this.Unit = parameter.Unit;
+        this.Value = parameter.Value;
+        this.Description = parameter.Description;
+        this.genericPath = parameter.genericPath;
+        this.configurationItemId = parameter.configurationItemId;
+        this.ValidFromReleaseId = parameter.ValidFromReleaseId;
+        this.ValidToReleaseId = parameter.ValidToReleaseId;
+
+    }
+
     public Parameter(long parameterId, String name, String path, String type, String unit, String value, String description, ConfigurationItem configurationItem, long validFromReleaseId, long validToReleaseId) {
         this.parameterId = parameterId;
         Name = name;

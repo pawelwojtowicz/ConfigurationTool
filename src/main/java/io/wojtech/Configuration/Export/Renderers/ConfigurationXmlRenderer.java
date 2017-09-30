@@ -1,6 +1,7 @@
 package io.wojtech.Configuration.Export.Renderers;
 
 
+import jdk.nashorn.internal.runtime.regexp.joni.constants.NodeType;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -15,13 +16,13 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
-
-
-
-
+import javax.xml.transform.stream.StreamResult;
 
 
 import io.wojtech.Configuration.Parameter.Parameter;
+
+import java.io.ByteArrayOutputStream;
+import java.util.regex.Pattern;
 
 public class ConfigurationXmlRenderer implements IConfigRenderer{
 
@@ -51,66 +52,104 @@ public class ConfigurationXmlRenderer implements IConfigRenderer{
 
 	@Override
 	public void addParameter(Parameter parameter) {
-		// TODO Auto-generated method stub
-		
-	}
+
+		if (parameter != null) {
+			String[] pathLevelList = parameter.getPath().split(Pattern.quote("."));
+
+			Element parametersParentNode = configurationRoot;
+
+			for (int i = 0 ; i < pathLevelList.length ; ++i ) {
+				String lnodePathName = pathLevelList[i];
+				Element lnode = getLNode( parametersParentNode , lnodePathName );
+				if ( lnode == null) {
+					lnode = createLNode(lnodePathName);
+					parametersParentNode.appendChild(lnode);
+				}
+
+				parametersParentNode = lnode;
+			}
+
+			if ( null != parametersParentNode ) {
+				Element parameterElement = getParameter( parametersParentNode , parameter.getName() );
+
+				if ( parameterElement != null ) {
+					parameterElement.setNodeValue(parameter.getValue());
+				} else {
+					parameterElement = createParameter( parameter);
+					parametersParentNode.appendChild(parameterElement);
+				}
+			}
+		}
+ 	}
 
 	@Override
 	public void finalizeConfiguration() {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	void addParameterUnderPath(Element configNode, String path , Parameter parameter) {
-		if (path.isEmpty() ) {
-			
-			Element parameterNode = getParameterElemment(configNode, parameter.getName() );//document.createElement("Parameter");
-			
-			parameterNode.setAttribute("Key", parameter.getName());			
-			parameterNode.setAttribute("Name", parameter.getDescription());
-			parameterNode.setAttribute("DataType", parameter.getType());
-			parameterNode.setAttribute("Unit", parameter.getUnit());
-			parameterNode.setTextContent(parameter.getValue() );
-		} else {
-			int dotIndex = path.indexOf(".");
-			
-			String elementPath = path;
-			
-			if ( dotIndex != 0 ) {
-				
-			}
-		}
+
+	private Element getLNode( Node parentNode, String lnodeName) {
+		return getElementByTypeAndName( parentNode, "LNode", lnodeName);
 	}
 
-	private Element getParameterElemment(Element configNode , String name) {
-		Element parameterElement = null;
-		
-		Node node = configNode.getFirstChild();
-		
-		while( node != null && parameterElement== null) {
-			if ( node.getNodeName() == "Parameter" ) {
-				NamedNodeMap attributes = node.getAttributes();
-				
-				Attr keyAttribute = (Attr)attributes.getNamedItem("Key");
-				
-				if (keyAttribute.getValue() == name) {
-					parameterElement = (Element)node;
+	private Element getParameter( Node parentNode , String parameterName ) {
+		return getElementByTypeAndName(parentNode,"Parameter", parameterName);
+	}
+
+
+	private Element getElementByTypeAndName( Node parentNode , String elementTypeName ,String elementName ) {
+		Element element = null;
+
+		Node tempNode = parentNode.getFirstChild();
+
+		while( (tempNode != null) && (element==null)) {
+			if ( tempNode.getNodeType() == Node.ELEMENT_NODE ) {
+				if ( tempNode.getNodeName() == elementTypeName ) {
+					NamedNodeMap attributes = tempNode.getAttributes();
+					Attr attribute = (Attr)attributes.getNamedItem("Key");
+					if ( attribute != null ) {
+						if ( elementName.equals(attribute.getValue()) ) {
+						    element = (Element)tempNode;
+						}
+					}
 				}
 			}
-			node = node.getNextSibling();
+            tempNode = tempNode.getNextSibling();
 		}
-				
-		if ( null != parameterElement ) {
-			parameterElement = document.createElement("Parameter");
-		}
-		
-		return parameterElement;
+
+		return element;
 	}
 
+
+	private Element createParameter( Parameter parameter) {
+		Element parameterNode = document.createElement("Parameter");
+		parameterNode.setAttribute("Key", parameter.getName());
+		parameterNode.setAttribute("Name", parameter.getDescription());
+		parameterNode.setAttribute("DataType", parameter.getType());
+		parameterNode.setAttribute("Unit", parameter.getUnit());
+		parameterNode.setTextContent(parameter.getValue());
+
+		return parameterNode;
+	}
+
+	private Element createLNode( String lnodeKey ) {
+		Element lNode = document.createElement("LNode");
+		lNode.setAttribute("Key" , lnodeKey);
+		return lNode;
+	}
+
+
 	@Override
-	public void getRenderersStream() {
-		// TODO Auto-generated method stub
-		
+	public byte[] getRenderersStream() throws TransformerException {
+
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(document);
+
+		ByteArrayOutputStream bos=new ByteArrayOutputStream();
+		StreamResult result=new StreamResult(bos);
+		transformer.transform(source, result);
+		return bos.toByteArray();
 	}
 	
 	DocumentBuilder docBuilder;

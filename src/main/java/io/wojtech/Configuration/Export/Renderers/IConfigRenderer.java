@@ -2,6 +2,8 @@ package io.wojtech.Configuration.Export.Renderers;
 
 import io.wojtech.Configuration.Parameter.Parameter;
 
+import javax.xml.transform.TransformerException;
+
 public interface IConfigRenderer {
 	void initializeConfigurationRenderer( String filename);
 	
@@ -9,6 +11,6 @@ public interface IConfigRenderer {
 	
 	void finalizeConfiguration();
 	
-	void getRenderersStream();
+	byte[] getRenderersStream() throws TransformerException;
 
 }

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 import io.wojtech.Configuration.Parameter.Parameter;
 
+import javax.xml.transform.TransformerException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
@@ -27,14 +28,21 @@ public class ExportController {
     ExportService exportService;
 	
     @RequestMapping(path = "/exportconfig/{nodeId}/{configurationItemId}", method= RequestMethod.GET)
-    public List<Parameter> ExportSingleConfigItem( @PathVariable String nodeId, @PathVariable long configurationItemId) throws IOException
-    {
-  //      InputStreamResource fileStream = new InputStreamResource(new FileInputStream("c:\\Filename.txt"));
-  //      HttpHeaders headers = new HttpHeaders();
+    public ResponseEntity<byte[]> ExportSingleConfigItem( @PathVariable String nodeId, @PathVariable long configurationItemId) throws IOException, TransformerException {
+        byte[] xmlFileInBuffer = exportService.ExportConfigItemForNode( configurationItemId, nodeId);
 
-        
-    return exportService.ExportConfigItemForNode( configurationItemId, nodeId);
-        
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        headers.setContentType(MediaType.APPLICATION_XML);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentLength(xmlFileInBuffer.length)
+                .body(xmlFileInBuffer);
     }
 
 
