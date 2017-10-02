@@ -2,6 +2,7 @@ package io.wojtech.Configuration.Export.Renderers;
 
 
 import jdk.nashorn.internal.runtime.regexp.joni.constants.NodeType;
+import org.springframework.http.MediaType;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,6 +29,7 @@ public class ConfigurationXmlRenderer implements IConfigRenderer{
 
 	@Override
 	public void initializeConfigurationRenderer(String filename) {
+		this.configFilename = filename;
 		// TODO Auto-generated method stub
 		
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -85,8 +87,13 @@ public class ConfigurationXmlRenderer implements IConfigRenderer{
 	@Override
 	public void finalizeConfiguration() {
 		// TODO Auto-generated method stub
-		
 	}
+
+	@Override
+	public MediaType getConfigitemMediaType() {
+		return MediaType.APPLICATION_XML;
+	}
+
 
 	private Element getLNode( Node parentNode, String lnodeName) {
 		return getElementByTypeAndName( parentNode, "LNode", lnodeName);
@@ -151,11 +158,17 @@ public class ConfigurationXmlRenderer implements IConfigRenderer{
 		transformer.transform(source, result);
 		return bos.toByteArray();
 	}
+
+	public 	String getConfigFilename() {
+		return configFilename;
+	}
 	
 	DocumentBuilder docBuilder;
 	
 	Document document;
 	
 	Element configurationRoot;
+
+	String configFilename;
 
 }

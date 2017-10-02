@@ -1,5 +1,6 @@
 package io.wojtech.Configuration.Export;
 
+import io.wojtech.Configuration.Export.Renderers.IConfigRenderer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +30,9 @@ public class ExportController {
 	
     @RequestMapping(path = "/exportconfig/{nodeId}/{configurationItemId}", method= RequestMethod.GET)
     public ResponseEntity<byte[]> ExportSingleConfigItem( @PathVariable String nodeId, @PathVariable long configurationItemId) throws IOException, TransformerException {
-        byte[] xmlFileInBuffer = exportService.ExportConfigItemForNode( configurationItemId, nodeId);
+
+        IConfigRenderer configRenderer =  exportService.ExportConfigItemForNode( configurationItemId, nodeId);
+        byte[] xmlFileInBuffer = configRenderer.getRenderersStream();
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -37,6 +40,7 @@ public class ExportController {
         headers.add("Expires", "0");
 
         headers.setContentType(MediaType.APPLICATION_XML);
+        headers.setContentDispositionFormData("attachment", configRenderer.getConfigFilename());
 
         return ResponseEntity
                 .ok()
