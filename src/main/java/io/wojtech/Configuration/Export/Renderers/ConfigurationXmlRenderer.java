@@ -75,11 +75,11 @@ public class ConfigurationXmlRenderer implements IConfigRenderer{
 				Element parameterElement = getParameter( parametersParentNode , parameter.getName() );
 
 				if ( parameterElement != null ) {
-					parameterElement.setNodeValue(parameter.getValue());
-				} else {
-					parameterElement = createParameter( parameter);
-					parametersParentNode.appendChild(parameterElement);
+					parametersParentNode.removeChild(parameterElement);
 				}
+				parameterElement = createParameter( parameter);
+				parametersParentNode.appendChild(parameterElement);
+
 			}
 		}
  	}
