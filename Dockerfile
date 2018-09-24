@@ -10,4 +10,4 @@ ARG JAR_FILE=target/Configuration-0.0.1-SNAPSHOT.jar
 
 ADD ${JAR_FILE} configurationTool.jar
 
-ENTRYPOINT["java","-Djava.security.edg=file:/dev/./urandom","-jar","/configurationTool.jar"]
+ENTRYPOINT ["java","-Djava.security.edg=file:/dev/./urandom","-jar","/configurationTool.jar"]
